@@ -176,8 +176,15 @@ templates/
 
 - humanizer, MIT: [blader/humanizer](https://github.com/blader/humanizer) —
   ознаки ШІ-тексту для частини 1 `language.md` і перевірка «що тут досі звучить
-  як ШІ»; англійську специфіку (тире, регістр заголовків, лапки) не перенесено.
+  як ШІ» і питання, що додано чи втрачено після правки; англійську специфіку
+  (тире, регістр заголовків, лапки) не перенесено.
 - humanizer, форк, MIT: [brandonwise/humanizer](https://github.com/brandonwise/humanizer).
+- technical-writer, MIT: [riekelt/technical-writer](https://github.com/riekelt/technical-writer) —
+  контрольні питання після переписування: зміст не втрачено, прийом не
+  повернувся в іншій формі (`language.md`, «Переписування зберігає зміст»).
+- humanizer-zh, MIT: [op7418/humanizer-zh](https://github.com/op7418/humanizer-zh) —
+  те саме для китайської; підтвердження, що перевірка змісту після чистки
+  потрібна незалежно від мови.
 - Compound Engineering, MIT:
   [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin) —
   ідея плану перед роботою (`/ce-plan`).
