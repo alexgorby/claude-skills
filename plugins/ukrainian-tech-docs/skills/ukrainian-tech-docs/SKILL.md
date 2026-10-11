@@ -191,6 +191,15 @@ templates/
 - humanizer-zh, MIT: [op7418/humanizer-zh](https://github.com/op7418/humanizer-zh) —
   те саме для китайської; підтвердження, що перевірка змісту після чистки
   потрібна незалежно від мови.
+- korean-humanizer з k-skill, MIT:
+  [nomadamas/k-skill, `korean-humanizer/instruction.md`](https://github.com/nomadamas/k-skill/blob/50d7bb3/korean-humanizer/instruction.md) —
+  рівні ваги ознак S1/S2/S3 і сортування «лише форматування — правити лише
+  форматування» (`language.md`, «Вага ознак»). Розкладку пунктів по рівнях
+  складено наново для української.
+- StoryScope: J. Russell et al., «StoryScope: Investigating idiosyncrasies in AI
+  fiction», COLM 2026, [arXiv 2604.03136](https://arxiv.org/abs/2604.03136) —
+  підтвердження, що окрема ознака ШІ не доводить, а сигнал дає їх поєднання
+  (рівень S3).
 - Compound Engineering, MIT:
   [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin) —
   ідея плану перед роботою (`/ce-plan`).
