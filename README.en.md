@@ -33,7 +33,8 @@ or `https://github.com/alexgorby/claude-skills` as the URL. Both plugins then
 appear on the Browse tab; Add installs the one you need.
 
 Alternatively, upload a skill as an archive: Settings → Skills → add custom
-skill. `pwsh ./build.ps1` builds the archives into `dist/`. Don't keep the
+skill. `pwsh ./build.ps1` builds the archives into `dist/`. A plugin works
+only in Claude Code; to have the skill in Claude chat as well, upload the archive. Don't keep the
 plugin and an uploaded copy of the same skill at once: Claude would see two
 identical skills.
 
