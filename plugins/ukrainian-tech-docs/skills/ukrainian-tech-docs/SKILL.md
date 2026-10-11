@@ -178,7 +178,10 @@ templates/
 - humanizer, MIT: [blader/humanizer](https://github.com/blader/humanizer) —
   ознаки ШІ-тексту для частини 1 `language.md` і перевірка «що тут досі звучить
   як ШІ» і питання, що додано чи втрачено після правки; англійську специфіку
-  (тире, регістр заголовків, лапки) не перенесено.
+  (тире, регістр заголовків, лапки) не перенесено. Залишки чату, заголовок,
+  повторений першим реченням, і текст про документ замість предмета —
+  [SKILL.md, §22, §24, §25](https://github.com/blader/humanizer/blob/225a6f3/SKILL.md)
+  (`language.md`, 1.13).
 - humanizer, форк, MIT: [brandonwise/humanizer](https://github.com/brandonwise/humanizer).
 - technical-writer, MIT: [riekelt/technical-writer](https://github.com/riekelt/technical-writer) —
   контрольні питання після переписування: зміст не втрачено, прийом не

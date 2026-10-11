@@ -117,10 +117,10 @@ macro-F1 проти 95,5% до правки ([StoryScope, §4.2](https://arxiv.o
 ```
 SKILL.md
 references/
-  language.md        мова: Л1–Л10 — віддієслівні іменники, пасив, порожні
+  language.md        мова: Л1–Л11 — віддієслівні іменники, пасив, порожні
                      звороти, «слугує» замість «є», трійки, родові ланцюги,
                      обгортки-абстракції, слова-фільтри, пишномовність,
-                     живий розмовний регістр
+                     живий розмовний регістр, залишки чату
   calques.md         кальки з російської й англійської, діагностика К1–К4
   orthography.md     правопис, милозвучність і пунктуація діалогу О1–О7
                      за Правописом 2019, з параграфами й сторінками
@@ -156,6 +156,8 @@ templates/
 - stop-slop, MIT: [SKILL.md](https://github.com/hardikpandya/stop-slop/blob/8da1f03/SKILL.md),
   [structures.md](https://github.com/hardikpandya/stop-slop/blob/8da1f03/references/structures.md).
 - deslop, MIT: [SKILL.md](https://github.com/stephenturner/skill-deslop/blob/a906154/SKILL.md).
+- humanizer, MIT: [SKILL.md](https://github.com/blader/humanizer/blob/225a6f3/SKILL.md),
+  §22, §24, §25 — залишки чату й текст про текст (`language.md`, Л11).
 - beautiful-prose: [SKILL.md](https://github.com/shadowpr0/beautiful_prose/blob/bf44efb/SKILL.md)
   (узято лише для переліку того, що не переноситься, Р9).
 - author-toolkit, MIT: [fiction-workshop/SKILL.md, Stage 3](https://github.com/rhavekost/author-toolkit/blob/b782870/skills/fiction-workshop/SKILL.md) —
