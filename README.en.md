@@ -28,13 +28,19 @@ Ukrainian text of the matching genre.
 
 ### Claude Desktop and claude.ai
 
-Open Plugins, choose Add → add marketplace and enter `alexgorby/claude-skills`
-or `https://github.com/alexgorby/claude-skills` as the URL. Both plugins then
+With a chat open (not the Code tab), go to Settings → Plugins, choose Add →
+add marketplace and enter `alexgorby/claude-skills` or
+`https://github.com/alexgorby/claude-skills` as the URL. Both plugins then
 appear on the Browse tab; Add installs the one you need.
 
+Where you add it from matters. A marketplace added from chat is saved to your
+claude.ai account, and the plugins work in chat, Cowork and Claude Code. Added
+while the Code tab is active, it stays on that computer and chat won't see it.
+
+Updates are manual: Plugins → "⋮" next to the plugin → check for updates → Update.
+
 Alternatively, upload a skill as an archive: Settings → Skills → add custom
-skill. `pwsh ./build.ps1` builds the archives into `dist/`. A plugin works
-only in Claude Code; to have the skill in Claude chat as well, upload the archive. Don't keep the
+skill. `pwsh ./build.ps1` builds the archives into `dist/`. Don't keep the
 plugin and an uploaded copy of the same skill at once: Claude would see two
 identical skills.
 
