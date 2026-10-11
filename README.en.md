@@ -11,7 +11,7 @@ The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 | Plugin | Purpose |
 |---|---|
 | `ukrainian-tech-docs` | Technical documentation: a work contract before writing, source discipline and uncertainty markers, living language, genre rules (HLD, LLD, ADR, how-to and runbook, concept, reference, troubleshooting, postmortem, diagram, plan), questions to adjacent teams, export to .docx, .xlsx, .pdf or email |
-| `ukrainian-fiction` | Fiction prose: language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they come from a book profile |
+| `ukrainian-fiction` | Fiction prose: language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
 
 ## Installation
 
