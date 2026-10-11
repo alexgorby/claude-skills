@@ -1,0 +1,20 @@
+{
+  "name": "alexgorby-skills",
+  "description": "Skills for writing Ukrainian technical documentation and fiction",
+  "owner": {
+    "name": "alexgorby",
+    "url": "https://github.com/alexgorby"
+  },
+  "plugins": [
+    {
+      "name": "ukrainian-tech-docs",
+      "source": "./plugins/ukrainian-tech-docs",
+      "description": "Ukrainian technical documentation: work contract, source discipline, living language without AI clichés, genre rules (HLD, LLD, ADR, runbook, postmortem…), export"
+    },
+    {
+      "name": "ukrainian-fiction",
+      "source": "./plugins/ukrainian-fiction",
+      "description": "Ukrainian fiction prose: language without calques and AI clichés, orthography, sentence, dialogue, scene and chapter structure, audit"
+    }
+  ]
+}

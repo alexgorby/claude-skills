@@ -1,0 +1,13 @@
+{
+  "name": "ukrainian-fiction",
+  "description": "Пакет письма художньої прози українською: мова без кальок і ШІ-кліше, правопис і милозвучність, речення й абзац, діалог, будова сцени й глави, аудит готового тексту.",
+  "author": {
+    "name": "alexgorby",
+    "url": "https://github.com/alexgorby"
+  },
+  "repository": "https://github.com/alexgorby/claude-skills",
+  "keywords": [
+    "ukrainian",
+    "writing"
+  ]
+}

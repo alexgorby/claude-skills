@@ -1,0 +1,13 @@
+{
+  "name": "ukrainian-tech-docs",
+  "description": "Пакет письма технічної документації українською: контракт роботи перед письмом, дисципліна джерел і маркерів невизначеності, жива мова без ШІ-кліше, жанрові правила (HLD, LLD, ADR, How-to/runbook, Concept, Reference, Troubleshooting, постмортем, схема, план), вилки й питання до суміжників, вивантаження назовні (.docx, .xlsx, .pdf, лист).",
+  "author": {
+    "name": "alexgorby",
+    "url": "https://github.com/alexgorby"
+  },
+  "repository": "https://github.com/alexgorby/claude-skills",
+  "keywords": [
+    "ukrainian",
+    "writing"
+  ]
+}

@@ -167,3 +167,20 @@ templates/
   postmortem-template.md    шаблон постмортему
   action-item-tracker.md    трекер дій після постмортему
 ```
+
+## 6. Джерела пакета
+
+Готові скіли й статті, з яких узято ідеї. Текст пакета написано наново
+українською; англомовні правила перенесено лише там, де вони працюють для
+української мови.
+
+- humanizer, MIT: [blader/humanizer](https://github.com/blader/humanizer) —
+  ознаки ШІ-тексту для частини 1 `language.md` і перевірка «що тут досі звучить
+  як ШІ»; англійську специфіку (тире, регістр заголовків, лапки) не перенесено.
+- humanizer, форк, MIT: [brandonwise/humanizer](https://github.com/brandonwise/humanizer).
+- Compound Engineering, MIT:
+  [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin) —
+  ідея плану перед роботою (`/ce-plan`).
+- Matt Van Horn, «Every Agentic Engineering Hack I Know», 2026 — той самий
+  підхід «спершу план», через статтю.
+- Окремі ідеї взято з README інших публічних скілів; текст власний.
