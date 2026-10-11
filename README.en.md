@@ -58,6 +58,10 @@ and other people's skills; English-specific rules were carried over only where
 they work for Ukrainian. The full list with links is in the "Джерела пакета"
 (Sources) section of each skill's `SKILL.md`.
 
+## License
+
+[MIT](LICENSE): free to use, modify and distribute, keeping the copyright notice.
+
 ## Author
 
 [alexgorby](https://github.com/alexgorby). Maintenance notes (in Ukrainian): [MAINTAINING.md](MAINTAINING.md).
