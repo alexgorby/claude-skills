@@ -89,6 +89,7 @@ macro-F1 проти 95,5% до правки ([StoryScope, §4.2](https://arxiv.o
 | Письмо | пишеться нова сцена або правиться наявна | `language.md` · `sentence.md` · `dialogue.md`, якщо в тексті є діалог · `orthography.md` · `calques.md` — лише за сумніву щодо слова |
 | Самоперевірка | перед тим як віддати текст | `audit.md`, розділ А5 «Фінальний прохід» і чек-лист |
 | Аудит готового тексту | «почисти», «перевір», «чи звучить як ШІ», «що не так із главою» | `audit.md` · далі файли рівнів за порядком А2 |
+| Читацький тест | «тест читача», «чи зрозуміло це без мене», «як це прочитає людина з вулиці»; сам не вмикається; нічого не править | `audit.md`, А6 |
 | Діагностика кальок | «діагностика кальок», «перевір мову», «прожени мову по главах»; нічого не править | `calques.md` · слот «Словник книги» |
 
 ### Закривальний рядок
@@ -128,8 +129,8 @@ references/
                      ремарки й реакції
   scene-chapter.md   будова сцени, епізоду й глави С1–С14 за StoryScope
                      і суміжними дослідженнями
-  audit.md           аудит А1–А5: режим, порядок рівнів, таблиця знахідок,
-                     тести правки, фінальний прохід, чек-лист
+  audit.md           аудит А1–А6: режим, порядок рівнів, таблиця знахідок,
+                     тести правки, фінальний прохід, читацький тест, чек-лист
 templates/
   book-profile.md    шаблон профілю книги
 ```
@@ -156,6 +157,8 @@ templates/
 - deslop, MIT: [SKILL.md](https://github.com/stephenturner/skill-deslop/blob/a906154/SKILL.md).
 - beautiful-prose: [SKILL.md](https://github.com/shadowpr0/beautiful_prose/blob/bf44efb/SKILL.md)
   (узято лише для переліку того, що не переноситься, Р9).
+- author-toolkit, MIT: [fiction-workshop/SKILL.md, Stage 3](https://github.com/rhavekost/author-toolkit/blob/b782870/skills/fiction-workshop/SKILL.md) —
+  читацький тест субагентом без Біблії книги (`audit.md`, А6).
 - Український правопис 2019, офіційний текст МОН:
   [ukr.pravopys-2019.pdf](https://mon.gov.ua/static-objects/mon/sites/1/zagalna%20serednya/Pravopys.2019/ukr.pravopys-2019.pdf).
 
