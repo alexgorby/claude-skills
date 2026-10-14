@@ -8,7 +8,7 @@
 
 | Плагін | Для чого |
 |---|---|
-| `ukrainian-tech-docs` | Технічна документація: контракт роботи перед письмом, дисципліна джерел і маркерів невизначеності, жива мова, жанрові правила (HLD, LLD, ADR, how-to і runbook, concept, reference, troubleshooting, постмортем, схема, план), питання до суміжних команд, вивантаження в .docx, .xlsx, .pdf чи лист. Що дати на вхід — [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); що таке кожен жанр і як його попросити — [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
+| `ukrainian-tech-docs` | Технічна документація: контракт роботи перед письмом, дисципліна джерел і маркерів невизначеності, жива мова, жанрові правила (HLD, LLD, ADR, ТЗ, how-to і runbook, concept, reference, troubleshooting, постмортем, схема, план), питання до суміжних команд, вивантаження в .docx, .xlsx, .pdf чи лист. Що дати на вхід — [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); що таке кожен жанр і як його попросити — [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
 | `ukrainian-fiction` | Художня проза: мова без кальок і ШІ-кліше, правопис і милозвучність, речення й абзац, діалог, будова сцени й глави, аудит готового тексту. Годиться й для перевірки вже написаного тексту — власного чи згенерованого. Правила конкретної книги (герої, словник, лор, тон) скіл не тримає — їх має давати профіль книги |
 
 ## Встановлення
