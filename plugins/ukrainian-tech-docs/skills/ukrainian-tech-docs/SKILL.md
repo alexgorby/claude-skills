@@ -231,4 +231,17 @@ templates/
   (`genres/plan.md`, розд. 3) і поріг для ADR (`genres/adr.md`). Жорсткий стоп
   перед кожним кроком до підтвердження й питання без ліміту не перенесено: вони суперечать правилу
   «маркер замість питання».
+- mattpocock/skills, MIT: [`domain-modeling/ADR-FORMAT.md`](https://github.com/mattpocock/skills/tree/main/skills/engineering/domain-modeling) —
+  три умови порогу ADR і класи рішень, які варто записувати (`genres/adr.md`);
+  [`to-tickets`](https://github.com/mattpocock/skills/tree/main/skills/engineering/to-tickets) —
+  міграція в три кроки (`genres/howto.md`, розд. 3).
+- knowledge-work-plugins, Apache-2.0:
+  [anthropics/knowledge-work-plugins, `engineering`](https://github.com/anthropics/knowledge-work-plugins/tree/main/engineering) —
+  розділ «Коли застосовувати» в runbook (`genres/howto.md`, розд. 1) і умова
+  перегляду рішення в «Наслідках» ADR (`genres/adr.md`).
+- archify, MIT: [tt-a1i/archify, `authoring-contract.md`](https://github.com/tt-a1i/archify) —
+  лінія крізь чужий вузол як помилка, підпис зв'язку не видаляють, порядок
+  перевірки, рамка лише для справжньої межі, застарілі ручні маршрути
+  (`genres/schema.md`, розд. 3). Сам інструмент не перенесено: він малює HTML
+  через Node.js, а правила тут — для будь-якого інструмента.
 - Окремі ідеї взято з README інших публічних скілів; текст власний.
