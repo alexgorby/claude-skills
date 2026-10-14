@@ -12,7 +12,7 @@ description: >
   "оформити як нотатку", "зібрати docx", "перекласти технічний текст українською",
   "діагностика кальок", "перевір переклад", "фактчекінг", "перевір факти",
   "звір із документацією", "тест читача", "чи зрозуміло це без мене", "ТЗ",
-  "технічне завдання", "специфікація вимог".
+  "технічне завдання", "специфікація вимог", "перевір ТЗ".
 ---
 
 # Письмо технічних документів
@@ -147,7 +147,8 @@ description: >
 перелік завжди, навіть порожній: «маркерів не ставив». Мовчання лишає
 `[на погодження]` чинним (`forks-and-questions.md`, розд. 5), а `[припущення]` —
 твердженням, якого ніхто не перевіряв: непоказаний маркер стає рішенням без
-погодження.
+погодження. Виняток — передача ТЗ у роботу: там мовчання не діє, і власник
+закриває кожен рядок явно (`genres/tz.md`, розд. 2).
 
 Перед записом у сховище підсумок іде разом із двома переліками `evidence.md`,
 розд. 7, і запис чекає тієї самої відповіді. `[припущення]`, уже внесене
@@ -233,15 +234,15 @@ templates/
   (`genres/plan.md`, розд. 3) і поріг для ADR (`genres/adr.md`). Жорсткий стоп
   перед кожним кроком до підтвердження й питання без ліміту не перенесено: вони суперечать правилу
   «маркер замість питання».
-- mattpocock/skills, MIT: [`domain-modeling/ADR-FORMAT.md`](https://github.com/mattpocock/skills/tree/main/skills/engineering/domain-modeling) —
+- mattpocock/skills, MIT: [`domain-modeling/ADR-FORMAT.md`](https://github.com/mattpocock/skills/blob/49dd158/skills/engineering/domain-modeling/ADR-FORMAT.md) —
   три умови порогу ADR і класи рішень, які варто записувати (`genres/adr.md`);
-  [`to-tickets`](https://github.com/mattpocock/skills/tree/main/skills/engineering/to-tickets) —
+  [`to-tickets`](https://github.com/mattpocock/skills/blob/49dd158/skills/engineering/to-tickets/SKILL.md) —
   міграція в три кроки (`genres/howto.md`, розд. 3).
 - knowledge-work-plugins, Apache-2.0:
   [anthropics/knowledge-work-plugins, `engineering`](https://github.com/anthropics/knowledge-work-plugins/tree/main/engineering) —
   розділ «Коли застосовувати» в runbook (`genres/howto.md`, розд. 1) і умова
   перегляду рішення в «Наслідках» ADR (`genres/adr.md`).
-- archify, MIT: [tt-a1i/archify, `authoring-contract.md`](https://github.com/tt-a1i/archify) —
+- archify, MIT: [tt-a1i/archify, `authoring-contract.md`](https://github.com/tt-a1i/archify/blob/d0c8c7e/archify/references/authoring-contract.md) —
   лінія крізь чужий вузол як помилка, підпис зв'язку не видаляють, порядок
   перевірки, рамка лише для справжньої межі, застарілі ручні маршрути
   (`genres/schema.md`, розд. 3). Сам інструмент не перенесено: він малює HTML
@@ -253,12 +254,12 @@ templates/
   окремим блоком, припущення й обмеження;
   [Fission-AI/OpenSpec](https://github.com/Fission-AI/OpenSpec) — вимога у формі
   зобов'язання з умовою приймання;
-  [compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) —
+  [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin) —
   трасування вимоги до рішення й перевірки;
   [addyosmani/agent-skills, `spec-driven-development`](https://github.com/addyosmani/agent-skills/tree/main/skills/spec-driven-development) —
   межі виконавця в три яруси;
-  [mattpocock/skills, `to-spec`](https://github.com/mattpocock/skills/tree/main/skills/engineering/to-spec) —
-  ухвалені рішення як окремий розділ специфікації. Користувацькі історії як
+  [mattpocock/skills, `to-spec`](https://github.com/mattpocock/skills/blob/49dd158/skills/engineering/to-spec/SKILL.md) —
+  ухвалені рішення Замовника серед обмежень специфікації. Користувацькі історії як
   обов'язкову форму вимог, оцінку трудомісткості й зупинку на погодження перед
   кожною фазою не перенесено. Правило виконуваності — жодного маркера чи
   відкритого питання в ТЗ, переданому в роботу, — власне.
