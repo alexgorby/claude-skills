@@ -1,0 +1,275 @@
+# Mechanical checks of skill and docs text. Finds, never fixes: every finding is
+# a candidate for a human verdict, not an error by itself.
+#
+# Checks (-Check):
+#   Url          broken relative links; with -Online also HTTP status of external URLs
+#   Placeholder  unfilled placeholders: TODO, TBD, FIXME, XXX, {{...}}, [...]
+#   Euphony      у/в, і/й, з/із/зі against the sounds at the word junction
+#                (language.md 1.14; Правопис 2019, § 23-25)
+#   Label        service label with a colon at the start of a prose paragraph (language.md 1.12)
+#   Opening      the same opening in 3+ sibling sections (language.md 1.5)
+#
+# Usage:
+#   pwsh ./check.ps1                         # docs/ and plugins/, all checks, offline
+#   pwsh ./check.ps1 -Check Euphony,Label
+#   pwsh ./check.ps1 -Path docs -Online
+# Exit code 1 when anything is found.
+param(
+    [string[]]$Path = @('docs', 'plugins'),
+    [ValidateSet('Url', 'Placeholder', 'Euphony', 'Label', 'Opening')]
+    [string[]]$Check = @('Url', 'Placeholder', 'Euphony', 'Label', 'Opening'),
+    [switch]$Online
+)
+
+$ErrorActionPreference = 'Stop'
+$root = $PSScriptRoot
+
+# ---------- text model ----------
+
+# Returns blocks of prose: @{ Line; Text; Kind } where Kind is
+# heading | para | list | cell. Code blocks and frontmatter are dropped.
+function Get-Blocks([string[]]$lines) {
+    $blocks = [System.Collections.Generic.List[object]]::new()
+    $inCode = $false; $inFront = $false
+    $cur = $null
+    $flush = { if ($cur) { $blocks.Add($cur) }; Set-Variable cur $null -Scope 1 }
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $l = $lines[$i]; $n = $i + 1
+        if ($i -eq 0 -and $l -eq '---') { $inFront = $true; continue }
+        if ($inFront) { if ($l -eq '---') { $inFront = $false }; continue }
+        if ($l -match '^\s*(```|~~~)') { & $flush; $inCode = -not $inCode; continue }
+        if ($inCode) { continue }
+        if ($l -match '^\s*$') { & $flush; continue }
+        if ($l -match '^(#{1,6})\s+(.*)$') {
+            & $flush
+            $blocks.Add(@{ Line = $n; Text = $Matches[2]; Kind = 'heading'; Level = $Matches[1].Length })
+            continue
+        }
+        if ($l -match '^\s*\|') {
+            & $flush
+            if ($l -match '^\s*\|[\s:\-|]+\|\s*$') { continue }
+            foreach ($c in ($l.Trim().Trim('|') -split '\|')) {
+                $blocks.Add(@{ Line = $n; Text = $c.Trim(); Kind = 'cell' })
+            }
+            continue
+        }
+        if ($l -match '^\s*([-*+]|\d+\.)\s+(.*)$') {
+            & $flush
+            $cur = @{ Line = $n; Text = $Matches[2]; Kind = 'list'; Lines = @($n) }
+            continue
+        }
+        if ($cur) { $cur.Text += ' ' + $l.Trim(); continue }
+        $cur = @{ Line = $n; Text = $l.Trim(); Kind = 'para' }
+    }
+    & $flush
+    $blocks
+}
+
+# Masks markup that is not prose: inline code, URLs, link targets, emphasis.
+function Get-Prose([string]$t) {
+    $t = $t -replace '`[^`]*`', ' ¤ '
+    $t = $t -replace '\]\([^)]*\)', ']'
+    $t = $t -replace 'https?://\S+', ' ¤ '
+    $t = $t -replace '«[^»]*»', ' ¤ '      # quoted examples and requests
+    $t = $t -replace '[\[\]*_]', ''
+    $t
+}
+
+# ---------- euphony ----------
+
+$vowel = 'аеиіоу'          # word-initial vowels
+$jot = 'яюєї'              # word-initial letters that start with [й]
+$endVowel = 'аеиіоуяюєї'   # word-final vowel letters
+$sib = 'зсцжчш'
+
+function Get-Expected([string]$tok, [string]$prev, [bool]$pause, [bool]$start, [string]$next) {
+    $t = $tok.ToLower(); $n = $next.ToLower()
+    $f = $n[0]; $s = if ($n.Length -gt 1) { $n[1] } else { ' ' }
+    $nVowel = $vowel.Contains($f); $nJot = $jot.Contains($f) -or $f -eq 'й'
+    $sCons = -not ($vowel + $jot + "ь'$([char]0x2019)$([char]0x02BC) ").Contains($s)
+    $pVowel = $prev -and $endVowel.Contains($prev.ToLower()[-1])
+    switch ($t) {
+        { $_ -in 'у', 'в' } {
+            if ('вф'.Contains($f) -or $n -match '^(льв|зв|св|дв|тв|гв|хв)') { return @('у') }
+            if ($start) { if ($nVowel) { return @('в') } elseif ($nJot) { return @('у') } else { return @('у', 'в') } }
+            if ($pause) { if ($nVowel) { return $null } else { return @('у') } }
+            if (-not $pVowel) { if ($nVowel) { return @('в') } elseif ($nJot) { return $null } else { return @('у') } }
+            if ($nJot) { return $null }
+            return @('в')
+        }
+        { $_ -in 'і', 'й' } {
+            if ($nJot) { return @('і') }
+            if ($prev -and 'йяюєї'.Contains($prev.ToLower()[-1])) { return @('і') }
+            if ($pause -or $start) { if ($nVowel) { return $null } else { return @('і') } }
+            if (-not $pVowel -and -not $nVowel) { return @('і') }
+            return @('й')
+        }
+        { $_ -in 'з', 'із', 'зі' } {
+            if ($sib.Contains($f)) { if ($sCons) { return @('зі', 'із') } else { return @('із') } }
+            if ($nJot) { return $null }
+            if ($nVowel) { return @('з') }
+            if ($start -or $pause -or $pVowel) { return @('з') }
+            return @('із')
+        }
+    }
+    $null
+}
+
+function Test-Euphony($file, $blocks) {
+    $rx = [regex]'(?<![\p{L}''\u2019\u02BC-])(і|й|у|в|з|із|зі|І|Й|У|В|З|Із|Зі)(?![\p{L}''\u2019\u02BC-])'
+    foreach ($b in $blocks) {
+        $t = Get-Prose $b.Text
+        if ($b.Kind -eq 'cell' -and ($t -split '\s+' | Where-Object { $_ }).Count -le 4) { continue }   # short cells are labels and forms
+        foreach ($m in $rx.Matches($t)) {
+            $left = $t.Substring(0, $m.Index).TrimEnd()
+            $right = $t.Substring($m.Index + $m.Length).TrimStart()
+            if ($right -notmatch '^[а-щьюяєіїґА-ЩЬЮЯЄІЇҐ]') { continue }   # Latin, digit, code: no rule
+            if ($right -cmatch '^[А-ЩЬЮЯЄІЇҐ]{2,}\b') { continue }        # abbreviation: read by letter names
+            $next = ($right -split '[^\p{L}''\u2019\u02BC-]')[0]
+            $start = $left -eq '' -or $left -match '[.!?…]$'
+            $pause = -not $start -and $left -match '[,;:—–()\-]$'
+            $prev = ''
+            if (-not $start -and -not $pause) {
+                if ($left -notmatch '([а-щьюяєіїґА-ЩЬЮЯЄІЇҐ''\u2019\u02BC]+)$') { continue }  # Latin or symbol before: unknown sound
+                $prev = $Matches[1]
+            }
+            $exp = Get-Expected $m.Value $prev $pause $start $next
+            if (-not $exp -or $exp -contains $m.Value.ToLower()) { continue }
+            $hint = "очікується: $($exp -join ' / ')"
+            if ($m.Value.ToLower() -eq 'і' -and $exp -contains 'й') { $hint += ' (і — якщо зіставлення понять)' }
+            $ctx = ("$($left -replace '^.*?(\S+\s+\S+)$','$1') [$($m.Value)] $next").Trim()
+            [pscustomobject]@{ Check = 'Euphony'; File = $file; Line = $b.Line; Text = $ctx; Hint = $hint }
+        }
+    }
+}
+
+# ---------- labels ----------
+
+function Test-Label($file, $blocks) {
+    foreach ($b in $blocks) {
+        if ($b.Kind -ne 'para') { continue }
+        $t = $b.Text
+        if ($t -match '^(\*\*)?([\p{Lu}][\p{Ll}''\u2019\u02BC-]*(?:\s+[\p{L}''\u2019\u02BC-]+){0,2}):(\*\*)?\s+\S') {
+            $label = $Matches[2]
+            [pscustomobject]@{ Check = 'Label'; File = $file; Line = $b.Line; Text = "${label}:"; Hint = 'роль ярлика — у саме речення (1.12)' }
+        }
+    }
+}
+
+# ---------- same opening ----------
+
+function Test-Opening($file, $blocks) {
+    $sections = [System.Collections.Generic.List[object]]::new()
+    $stack = @()
+    for ($i = 0; $i -lt $blocks.Count; $i++) {
+        $b = $blocks[$i]
+        if ($b.Kind -ne 'heading') { continue }
+        $stack = @($stack | Where-Object { $_.Level -lt $b.Level })
+        $parent = if ($stack) { $stack[-1].Line } else { 0 }
+        $stack += $b
+        $first = $blocks[$i + 1]
+        if (-not $first -or $first.Kind -ne 'para') { continue }
+        $words = @((Get-Prose $first.Text).ToLower() -split '[^\p{L}\p{N}''\u2019\u02BC-]+' | Where-Object { $_ })
+        if ($words.Count -lt 2) { continue }
+        $sections.Add(@{ Key = "$parent/$($b.Level)"; Line = $first.Line; Words = $words; Head = $b.Text })
+    }
+    $hit = @{}
+    foreach ($g in ($sections | Group-Object { $_.Key })) {
+        foreach ($p in 1..3) {
+            $sub = $g.Group | Where-Object { $_.Words.Count -gt $p } |
+                Group-Object { "$($_.Words[0]) @$p $($_.Words[$p])" } | Where-Object Count -ge 3
+            foreach ($s in $sub) { foreach ($x in $s.Group) { $hit[$x.Line] = @($x, $s.Count) } }
+        }
+    }
+    foreach ($k in ($hit.Keys | Sort-Object)) {
+        $x, $count = $hit[$k]
+        $open = ($x.Words[0..([Math]::Min(4, $x.Words.Count - 1))] -join ' ')
+        [pscustomobject]@{ Check = 'Opening'; File = $file; Line = $x.Line; Text = "$($x.Head): «$open…»"; Hint = "однаковий зачин у $count сусідніх розділах (1.5)" }
+    }
+}
+
+# ---------- placeholders ----------
+
+function Test-Placeholder($file, [string[]]$lines) {
+    if ($file -match '(^|/)templates/') { return }   # templates hold placeholders by design
+    $rx = '\b(TODO|TBD|FIXME|XXX)\b|\{\{[^}]*\}\}|\[\s*(\.\.\.|…)\s*\]|(?i:lorem ipsum)'
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        if (($lines[$i] -replace '`[^`]*`|«[^»]*»', '') -match $rx) {
+            [pscustomobject]@{ Check = 'Placeholder'; File = $file; Line = $i + 1; Text = $Matches[0]; Hint = 'незаповнена заготовка' }
+        }
+    }
+}
+
+# ---------- urls ----------
+
+$external = @{}
+function Test-Url($file, $full, [string[]]$lines) {
+    $dir = Split-Path $full
+    $inCode = $false
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $l = $lines[$i]
+        if ($l -match '^\s*(```|~~~)') { $inCode = -not $inCode; continue }
+        if ($inCode) { continue }
+        $l = $l -replace '`[^`]*`', ''
+        foreach ($m in [regex]::Matches($l, '\]\(([^)\s]+)\)')) {
+            $u = $m.Groups[1].Value
+            if ($u -match '^(https?:|mailto:)') { continue }
+            if ($u.StartsWith('#')) { continue }
+            $target = [uri]::UnescapeDataString(($u -split '#')[0])
+            if (-not (Test-Path (Join-Path $dir $target))) {
+                [pscustomobject]@{ Check = 'Url'; File = $file; Line = $i + 1; Text = $u; Hint = 'файла немає' }
+            }
+        }
+        foreach ($m in [regex]::Matches($l, 'https?://[^\s)>\]»"`]+')) {
+            $u = $m.Value.TrimEnd('.', ',', ';', ':')
+            if (-not $external[$u]) { $external[$u] = [System.Collections.Generic.List[string]]::new() }
+            $external[$u].Add("${file}:$($i + 1)")
+        }
+    }
+}
+
+function Test-External {
+    foreach ($u in ($external.Keys | Sort-Object)) {
+        $code = $null; $err = $null; $cf = $false
+        foreach ($method in 'Head', 'Get') {
+            try {
+                $r = Invoke-WebRequest -Uri $u -Method $method -MaximumRedirection 5 -TimeoutSec 20 -SkipHttpErrorCheck -UseBasicParsing
+                $code = [int]$r.StatusCode
+                $cf = [bool]$r.Headers['cf-mitigated']
+            } catch { $err = $_.Exception.Message; $code = $null }
+            if ($code -and $code -lt 400) { break }
+        }
+        if ($code -and $code -lt 400) { continue }
+        $where = $external[$u][0] -split ':(?=\d+$)'
+        $more = if ($external[$u].Count -gt 1) { " (+$($external[$u].Count - 1))" } else { '' }
+        [pscustomobject]@{ Check = 'Url'; File = $where[0]; Line = [int]$where[1]; Text = $u; Hint = $(if ($cf) { "HTTP $code, перевірка Cloudflare: відкрити в браузері$more" } elseif ($code) { "HTTP $code$more" } else { "$err$more" }) }
+    }
+}
+
+# ---------- run ----------
+
+$files = foreach ($p in $Path) {
+    $full = Join-Path $root $p
+    if (Test-Path $full -PathType Leaf) { Get-Item $full } else { Get-ChildItem $full -Recurse -Filter *.md }
+}
+
+$found = foreach ($f in $files) {
+    $rel = [IO.Path]::GetRelativePath($root, $f.FullName) -replace '\\', '/'
+    $lines = [IO.File]::ReadAllLines($f.FullName, [Text.Encoding]::UTF8)
+    $blocks = Get-Blocks $lines
+    if ('Url' -in $Check) { Test-Url $rel $f.FullName $lines }
+    if ('Placeholder' -in $Check) { Test-Placeholder $rel $lines }
+    if ('Euphony' -in $Check) { Test-Euphony $rel $blocks }
+    if ('Label' -in $Check) { Test-Label $rel $blocks }
+    if ('Opening' -in $Check) { Test-Opening $rel $blocks }
+}
+if ('Url' -in $Check -and $Online) { $found = @($found) + @(Test-External) }
+
+$found = @($found | Where-Object { $_ })
+foreach ($g in ($found | Group-Object Check)) {
+    Write-Output "== $($g.Name): $($g.Count)"
+    foreach ($x in $g.Group) { Write-Output ("{0}:{1}  {2}  — {3}" -f $x.File, $x.Line, $x.Text, $x.Hint) }
+    Write-Output ''
+}
+if ($found.Count) { Write-Output "Знахідок: $($found.Count). Скрипт нічого не правив."; exit 1 }
+Write-Output 'Знахідок немає.'
