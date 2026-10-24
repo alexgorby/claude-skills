@@ -8,18 +8,25 @@
 #                (language.md 1.14; Правопис 2019, § 23-25)
 #   Label        service label with a colon at the start of a prose paragraph (language.md 1.12)
 #   Opening      the same opening in 3+ sibling sections (language.md 1.5)
+#   Shared       signs shared by both packages (docs/shared-signs.md): each point
+#                exists and carries every form marker. Repo-wide, ignores -Path;
+#                runs by default only when -Path is not given
 #
 # Usage:
 #   pwsh ./check.ps1                         # docs/ and plugins/, all checks, offline
 #   pwsh ./check.ps1 -Check Euphony,Label
+#   pwsh ./check.ps1 -Check Shared
 #   pwsh ./check.ps1 -Path docs -Online
 # Exit code 1 when anything is found.
 param(
     [string[]]$Path = @('docs', 'plugins'),
-    [ValidateSet('Url', 'Placeholder', 'Euphony', 'Label', 'Opening')]
-    [string[]]$Check = @('Url', 'Placeholder', 'Euphony', 'Label', 'Opening'),
+    [ValidateSet('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Shared')]
+    [string[]]$Check = @('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Shared'),
     [switch]$Online
 )
+if ($PSBoundParameters.ContainsKey('Path') -and -not $PSBoundParameters.ContainsKey('Check')) {
+    $Check = $Check | Where-Object { $_ -ne 'Shared' }
+}
 
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
@@ -200,6 +207,60 @@ function Test-Placeholder($file, [string[]]$lines) {
     }
 }
 
+# ---------- shared signs ----------
+
+# Text of the section whose heading starts with $prefix, up to the next heading
+# of the same or higher level; $null when no such heading.
+function Get-Section([string]$full, [string]$prefix) {
+    if (-not (Test-Path $full)) { return $null }
+    $lines = [IO.File]::ReadAllLines($full, [Text.Encoding]::UTF8)
+    $rx = '^(#{1,6})\s+' + [regex]::Escape($prefix) + '(\.|\s|$)'
+    $start = -1; $level = 0
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        if ($start -lt 0) {
+            if ($lines[$i] -match $rx) { $start = $i; $level = $Matches[1].Length }
+        } elseif ($lines[$i] -match '^(#{1,6})\s' -and $Matches[1].Length -le $level) {
+            return ($lines[$start..($i - 1)] -join "`n")
+        }
+    }
+    if ($start -ge 0) { return ($lines[$start..($lines.Count - 1)] -join "`n") }
+    $null
+}
+
+function Test-Shared {
+    $reg = 'docs/shared-signs.md'
+    $full = Join-Path $root $reg
+    if (-not (Test-Path $full)) { return }
+    $base = @{
+        tech    = 'plugins/ukrainian-tech-docs/skills/ukrainian-tech-docs/references'
+        fiction = 'plugins/ukrainian-fiction/skills/ukrainian-fiction/references'
+    }
+    $lines = [IO.File]::ReadAllLines($full, [Text.Encoding]::UTF8)
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $cells = $lines[$i].Trim().Trim('|') -split '\|' | ForEach-Object { $_.Trim() }
+        if ($lines[$i] -notmatch '^\s*\|' -or $cells.Count -lt 5) { continue }
+        $tech = [regex]::Match($cells[2], '`([^`#]+)#([^`]+)`')
+        $fic  = [regex]::Match($cells[3], '`([^`#]+)#([^`]+)`')
+        if (-not $tech.Success -or -not $fic.Success) { continue }   # header row
+        $key = $cells[0]
+        $markers = [regex]::Matches($cells[4], '`([^`]+)`') | ForEach-Object { $_.Groups[1].Value }
+        foreach ($side in @(@('tech', $tech), @('fiction', $fic))) {
+            $name, $m = $side
+            $file = $m.Groups[1].Value; $point = $m.Groups[2].Value
+            $text = Get-Section (Join-Path $root "$($base[$name])/$file") $point
+            if ($null -eq $text) {
+                [pscustomobject]@{ Check = 'Shared'; File = $reg; Line = $i + 1; Text = $key; Hint = "${name}: пункту $file#$point немає" }
+                continue
+            }
+            foreach ($mk in $markers) {
+                if ($text.IndexOf($mk, [StringComparison]::OrdinalIgnoreCase) -lt 0) {
+                    [pscustomobject]@{ Check = 'Shared'; File = $reg; Line = $i + 1; Text = $key; Hint = "${name}: у $file#$point немає «$mk»" }
+                }
+            }
+        }
+    }
+}
+
 # ---------- urls ----------
 
 $external = @{}
@@ -264,6 +325,7 @@ $found = foreach ($f in $files) {
     if ('Opening' -in $Check) { Test-Opening $rel $blocks }
 }
 if ('Url' -in $Check -and $Online) { $found = @($found) + @(Test-External) }
+if ('Shared' -in $Check) { $found = @($found) + @(Test-Shared) }
 
 $found = @($found | Where-Object { $_ })
 foreach ($g in ($found | Group-Object Check)) {
