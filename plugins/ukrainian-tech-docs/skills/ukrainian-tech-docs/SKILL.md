@@ -218,11 +218,27 @@ templates/
 - humanizer, MIT: [blader/humanizer](https://github.com/blader/humanizer) —
   ознаки ШІ-тексту для частини 1 `language.md` і перевірка «що тут досі звучить
   як ШІ» і питання, що додано чи втрачено після правки; англійську специфіку
-  (тире, регістр заголовків, лапки) не перенесено. Залишки чату, заголовок,
+  (тире, регістр заголовків, лапки) як ознаки ШІ не перенесено. Регістр заголовків
+  і лапки записано окремо, як норму правопису (`genres/general.md`, розд. 1). Залишки чату, заголовок,
   повторений першим реченням, і текст про документ замість предмета —
   [SKILL.md, §22, §24, §25](https://github.com/blader/humanizer/blob/225a6f3/SKILL.md)
   (`language.md`, 1.13).
 - humanizer, форк, MIT: [brandonwise/humanizer](https://github.com/brandonwise/humanizer).
+- Українські адаптації humanizer, усі MIT, узято лише ідеї, текст власний:
+  [iosipov27/ukrainian-humanizer](https://github.com/iosipov27/ukrainian-humanizer) —
+  голос автора перед чисткою (`language.md`, «Переписування зберігає зміст»);
+  [asaulyuk/humanizer-ukr](https://github.com/asaulyuk/humanizer-ukr) — активні
+  дієприкметники (1.7), канцелярит і аналітичний ступінь порівняння (1.4), кличний
+  відмінок і типографіка (`genres/general.md`, розд. 1, 3), невидимі символи
+  (`export.md`, розд. 0);
+  [tatet-ua/tatet-humanizer](https://github.com/tatet-ua/tatet-humanizer) —
+  службові мітки чату (1.13), хвостове заперечення (1.9), прийоми самої чистки;
+  [majlovskij-cmd/humanizer-ua](https://github.com/majlovskij-cmd/humanizer-ua) —
+  приклади кальок з російської («Діагностика кальок»);
+  [OpenMindUA/SimpleUkrainian](https://github.com/OpenMindUA/SimpleUkrainian) —
+  умова перед дією (`genres/howto.md`, розд. 2), висновок першим
+  (`genres/general.md`, розд. 1), слова-порожнеча (1.4). Заборону тире, числові
+  пороги, «додавай голос» і автозаміни «слово → слово» не перенесено.
 - technical-writer, MIT: [riekelt/technical-writer](https://github.com/riekelt/technical-writer) —
   контрольні питання після переписування: зміст не втрачено, прийом не
   повернувся в іншій формі (`language.md`, «Переписування зберігає зміст»).

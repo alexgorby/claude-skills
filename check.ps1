@@ -8,7 +8,11 @@
 #                (language.md 1.14; Правопис 2019, § 23-25)
 #   Label        service label with a colon at the start of a prose paragraph (language.md 1.12)
 #   Opening      the same opening in 3+ sibling sections (language.md 1.5)
-#   Shared       signs shared by both packages (docs/shared-signs.md): each point
+#   Artifact     chat service marks (oaicite, utm_source=chatgpt, 【N†source】, [cite: N]),
+#                invisible characters (U+200B, U+200D, U+2060, U+FEFF past the start,
+#                U+00AD) and Latin homoglyphs inside a Cyrillic word
+#                (language.md 1.13; export.md, розд. 0)
+#   Shared      signs shared by both packages (docs/shared-signs.md): each point
 #                exists and carries every form marker. Repo-wide, ignores -Path;
 #                runs by default only when -Path is not given
 #
@@ -20,8 +24,8 @@
 # Exit code 1 when anything is found.
 param(
     [string[]]$Path = @('docs', 'plugins'),
-    [ValidateSet('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Shared')]
-    [string[]]$Check = @('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Shared'),
+    [ValidateSet('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Artifact', 'Shared')]
+    [string[]]$Check = @('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Artifact', 'Shared'),
     [switch]$Online
 )
 if ($PSBoundParameters.ContainsKey('Path') -and -not $PSBoundParameters.ContainsKey('Check')) {
@@ -207,6 +211,32 @@ function Test-Placeholder($file, [string[]]$lines) {
     }
 }
 
+# ---------- chat marks, invisible characters, homoglyphs ----------
+
+function Test-Artifact($file, [string[]]$lines) {
+    $marks = 'oaicite|contentReference\[|utm_source=chatgpt|【[^】]*†[^】]*】|\[cite:\s*\d'
+    $invisible = @{ 0x200B = 'U+200B'; 0x200D = 'U+200D'; 0x2060 = 'U+2060'; 0xFEFF = 'U+FEFF'; 0x00AD = 'U+00AD' }
+    $mixed = [regex]'[\p{L}''\u2019\u02BC]*(?:[а-щьюяєіїґА-ЩЬЮЯЄІЇҐ][a-zA-Z]|[a-zA-Z][а-щьюяєіїґА-ЩЬЮЯЄІЇҐ])[\p{L}''\u2019\u02BC]*'
+    $inCode = $false
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $l = $lines[$i]
+        foreach ($c in $invisible.Keys) {
+            $at = $l.IndexOf([char]$c)
+            if ($at -lt 0 -or ($c -eq 0xFEFF -and $i -eq 0 -and $at -eq 0)) { continue }   # BOM at file start is fine
+            [pscustomobject]@{ Check = 'Artifact'; File = $file; Line = $i + 1; Text = $invisible[$c]; Hint = 'невидимий символ: показати автору, не видаляти мовчки' }
+        }
+        if ($l -match '^\s*(```|~~~)') { $inCode = -not $inCode; continue }
+        if ($inCode) { continue }
+        $t = $l -replace '`[^`]*`', ' '   # examples in inline code are documentation, not residue
+        if ($t -match $marks) {
+            [pscustomobject]@{ Check = 'Artifact'; File = $file; Line = $i + 1; Text = $Matches[0]; Hint = 'службова мітка чату (1.13)' }
+        }
+        foreach ($m in $mixed.Matches(($t -replace 'https?://\S+', ' '))) {
+            [pscustomobject]@{ Check = 'Artifact'; File = $file; Line = $i + 1; Text = $m.Value; Hint = 'латиниця й кирилиця в одному слові: можлива підмінена літера' }
+        }
+    }
+}
+
 # ---------- shared signs ----------
 
 # Text of the section whose heading starts with $prefix, up to the next heading
@@ -323,6 +353,7 @@ $found = foreach ($f in $files) {
     if ('Euphony' -in $Check) { Test-Euphony $rel $blocks }
     if ('Label' -in $Check) { Test-Label $rel $blocks }
     if ('Opening' -in $Check) { Test-Opening $rel $blocks }
+    if ('Artifact' -in $Check) { Test-Artifact $rel $lines }
 }
 if ('Url' -in $Check -and $Online) { $found = @($found) + @(Test-External) }
 if ('Shared' -in $Check) { $found = @($found) + @(Test-Shared) }
