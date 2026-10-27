@@ -83,6 +83,21 @@
 скіл. Архів збирає `pwsh ./build.ps1` у теку `dist/`. Не тримайте одночасно
 плагін і архівну копію того самого скіла: Claude бачитиме два однакові скіли.
 
+### Codex
+
+Codex читає той самий маркетплейс, окремої редакції для нього немає:
+
+```
+codex plugin marketplace add alexgorby/claude-skills
+codex plugin add ukrainian-tech-docs@alexgorby-skills
+codex plugin add ukrainian-fiction@alexgorby-skills
+```
+
+Знімок маркетплейсу оновлює `codex plugin marketplace upgrade`.
+
+Перевірено 27.10.2026, Codex 0.164: скіл вмикається й читає правила, але звіт
+дотримується їх не повністю.
+
 ### Інші агенти
 
 Скіл — звичайна тека з `SKILL.md`. Її можна скопіювати в теку скілів будь-якого

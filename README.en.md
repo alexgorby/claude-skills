@@ -96,6 +96,21 @@ skill. `pwsh ./build.ps1` builds the archives into `dist/`. Don't keep the
 plugin and an uploaded copy of the same skill at once: Claude would see two
 identical skills.
 
+### Codex
+
+Codex reads the same marketplace; there is no separate edition for it:
+
+```
+codex plugin marketplace add alexgorby/claude-skills
+codex plugin add ukrainian-tech-docs@alexgorby-skills
+codex plugin add ukrainian-fiction@alexgorby-skills
+```
+
+`codex plugin marketplace upgrade` refreshes the marketplace snapshot.
+
+Tested 27.10.2026, Codex 0.164: the skill activates and reads its rules, but
+the report follows them only partly.
+
 ### Other agents
 
 A skill is a plain folder with `SKILL.md`. Copy it into the skills folder of
