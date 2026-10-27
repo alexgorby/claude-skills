@@ -33,7 +33,26 @@ only.
 | Draft questions to an adjacent team | «Сформулюй питання до мережевиків про …» *(draft questions to the network team about …)* |
 | Build a file for readers outside the team | «Збери docx» *(build a docx)*, «оформи як лист» *(format as an email)* |
 
-What each genre is and how to ask for it (in Ukrainian):
+**Genres.** Each has its own structure rules and checklist.
+
+| Genre | What goes in it |
+|---|---|
+| HLD | Concepts, decisions, trade-offs; no values of a specific build |
+| LLD | Values, addresses, parameters and step order following from HLD decisions |
+| ADR | One architecture decision with options and the trade-off |
+| Specification (ТЗ) | What is needed and how it is accepted: executable items only, no open questions |
+| How-to, runbook, procedure | Steps with verification and rollback |
+| Step-by-step guide | Actions only, for a reader doing them for the first time: verified prerequisites, step by step |
+| Concept | How a component works |
+| Reference | Tables, data schemas, codes; no prose |
+| Troubleshooting | A case record, symptom first |
+| Postmortem | Closing an incident after service is restored |
+| Security document | How the system is protected: access, secrets, network surface, data, supply chain |
+| Diagram | Topology and mechanism, legible in print |
+| Plan | Only when asked: «спершу план» *(plan first)*, «склади план» *(make a plan)* |
+| Email, message, note, README | General rules: one document, one task; an email is a slice of the working document for one recipient |
+
+Each genre in detail and how to ask for it (in Ukrainian):
 [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md).
 
 ### ukrainian-fiction
