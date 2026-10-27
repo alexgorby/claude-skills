@@ -13,6 +13,43 @@ The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 | `ukrainian-tech-docs` | Technical documentation: a work contract before writing, source discipline and uncertainty markers, living language, genre rules (HLD, LLD, ADR, technical specification (ТЗ), how-to and runbook, concept, reference, troubleshooting, postmortem, diagram, plan), questions to adjacent teams, export to .docx, .xlsx, .pdf or email. Inputs to prepare (in Ukrainian): [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); what each genre is and how to ask for it (in Ukrainian): [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
 | `ukrainian-fiction` | Fiction prose: language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
 
+## What it can do
+
+A skill activates on its own when a request resembles one of these. The
+skills expect Ukrainian requests; the English in brackets is for orientation
+only.
+
+### ukrainian-tech-docs
+
+| Task | How to ask |
+|---|---|
+| Write a document of a given genre | «Напиши ADR про вибір …» *(write an ADR on choosing …)*, «покрокова інструкція для …» *(step-by-step guide for …)*, «ТЗ на …» *(specification for …)* |
+| Clean text of AI clichés, bureaucratese and calques | «Почисти текст» *(clean up the text)*, «прибери воду» *(cut the fluff)*, «перепиши документ» *(rewrite the document)* |
+| Find calques without editing | «Діагностика кальок» *(calque diagnostics)*, «перевір переклад» *(check the translation)* |
+| Check claims against documentation | «Фактчекінг» *(fact-check)*, «перевір факти» *(check the facts)*, «звір із документацією» *(verify against the docs)* |
+| Check that it reads without the author | «Тест читача» *(reader test)*, «чи зрозуміло це без мене» *(is it clear without me)* |
+| Review a finished specification | «Перевір ТЗ» *(review the spec)* |
+| Translate technical text | «Переклади українською» *(translate into Ukrainian)* |
+| Draft questions to an adjacent team | «Сформулюй питання до мережевиків про …» *(draft questions to the network team about …)* |
+| Build a file for readers outside the team | «Збери docx» *(build a docx)*, «оформи як лист» *(format as an email)* |
+
+What each genre is and how to ask for it (in Ukrainian):
+[docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md).
+
+### ukrainian-fiction
+
+| Task | How to ask |
+|---|---|
+| Write a scene or a chapter | «Напиши сцену …» *(write a scene …)*, «для наступної глави …» *(for the next chapter …)* |
+| Clean a chapter of AI clichés | «Почисти главу» *(clean up the chapter)*, «прибери ШІ з тексту» *(remove the AI from the text)* |
+| Check a text, your own or generated | «Чи звучить це як ШІ?» *(does this sound like AI?)*, «перевір мій текст» *(check my text)*, «перевір згенерований текст» *(check the generated text)* |
+| Find calques | «Діагностика кальок у главі» *(calque diagnostics in the chapter)* |
+| Check one level only | «Перевір будову глави» *(check the chapter structure)*, «перевір тільки діалоги» *(check the dialogue only)* |
+| Read a chapter as a reader would | «Тест читача» *(reader test)*, «прожени главу очима читача» *(run the chapter past a reader)* |
+
+The audit returns a table of findings, not a rewritten text: the author
+decides what to change.
+
 ## What it looks like
 
 > **Before:** Варто зазначити, що резервне копіювання відіграє ключову роль
