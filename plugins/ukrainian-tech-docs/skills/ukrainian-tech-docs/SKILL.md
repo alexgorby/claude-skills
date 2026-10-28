@@ -254,6 +254,12 @@ templates/
   fiction», COLM 2026, [arXiv 2604.03136](https://arxiv.org/abs/2604.03136) —
   підтвердження, що окрема ознака ШІ не доводить, а сигнал дає їх поєднання
   (рівень S3).
+- J. Liao et al., «Defensive Writing in GPT Models», препринт, 2026,
+  [arXiv 2610.11355](https://arxiv.org/abs/2610.11355v2) — застереження без
+  підстави, які модель дописує, коли перевіряє твердження (`language.md`,
+  «Переписування зберігає зміст»). Знайдено через
+  [Nanako0129/sepia](https://github.com/Nanako0129/sepia), MIT, де на цій основі
+  зроблено правило для переписування ділового тексту; текст правила власний.
 - Compound Engineering, MIT:
   [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin) —
   ідея плану перед роботою (`/ce-plan`).
