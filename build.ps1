@@ -14,10 +14,19 @@ foreach ($name in $Skill) {
     $rel = "plugins/$name/skills/$name"
     $src = Join-Path $root $rel
     if (-not (Test-Path (Join-Path $src 'SKILL.md'))) { throw "No SKILL.md in $src" }
-    # Only committed state goes to Claude
-    if (git -C $root status --porcelain -- $rel) { throw "$name has uncommitted changes; commit first" }
+    # Only committed state goes to Claude; a failed git call is not a clean tree
+    $dirty = git -C $root status --porcelain -- $rel
+    if ($LASTEXITCODE -ne 0) { throw "git status failed in $root; build needs a git checkout" }
+    if ($dirty) { throw "$name has uncommitted changes; commit first" }
     $zip = Join-Path $dist "$name.zip"
     if (Test-Path $zip) { Remove-Item $zip -Confirm:$false }
-    Compress-Archive -Path $src -DestinationPath $zip
+    # The licence lives at the repo root; each archive carries its own copy
+    $stage = Join-Path ([IO.Path]::GetTempPath()) "skill-build-$name"
+    if (Test-Path $stage) { Remove-Item $stage -Recurse -Confirm:$false }
+    New-Item -ItemType Directory $stage | Out-Null
+    Copy-Item $src -Destination $stage -Recurse
+    Copy-Item (Join-Path $root 'LICENSE') -Destination (Join-Path $stage $name)
+    Compress-Archive -Path (Join-Path $stage $name) -DestinationPath $zip
+    Remove-Item $stage -Recurse -Confirm:$false
     Write-Output $zip
 }

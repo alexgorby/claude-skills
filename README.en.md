@@ -111,7 +111,7 @@ example (in Ukrainian): [docs/examples.md](docs/examples.md).
 
 ## How it is tested
 
-Test sets live in [tests/](tests/). The technical skill has 22 synthetic
+Test sets live in [tests/](tests/). The technical skill has 24 synthetic
 cases: language editing and audit, sources and fact-checking, genres and
 export, plus texts that need no edits. Fiction has 6 human-written passages
 the skill must not "fix". Criteria were fixed before the first run, and the
