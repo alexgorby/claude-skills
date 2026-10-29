@@ -6,8 +6,9 @@
 #   Placeholder  unfilled placeholders: TODO, TBD, FIXME, XXX, {{...}}, [...]
 #   Euphony      у/в, і/й, з/із/зі against the sounds at the word junction
 #                (language.md 1.14; Правопис 2019, § 23-25)
-#   Label        service label with a colon at the start of a prose paragraph (language.md 1.12)
-#   Opening      the same opening in 3+ sibling sections (language.md 1.5)
+#   Label        service label with a colon at the start of a prose paragraph (language.md 1.12);
+#                structural labels the format requires are skipped ($formatLabels)
+#   Opening      the same opening in 3+ sibling sections (language.md 1.5); skips templates/
 #   Artifact     chat service marks (oaicite, utm_source=chatgpt, 【N†source】, [cite: N]),
 #                invisible characters (U+200B, U+200D, U+2060, U+FEFF past the start,
 #                U+00AD) and Latin homoglyphs inside a Cyrillic word
@@ -17,13 +18,13 @@
 #                runs by default only when -Path is not given
 #
 # Usage:
-#   pwsh ./check.ps1                         # docs/ and plugins/, all checks, offline
+#   pwsh ./check.ps1                         # docs/, plugins/, tests/ and root docs, all checks, offline
 #   pwsh ./check.ps1 -Check Euphony,Label
 #   pwsh ./check.ps1 -Check Shared
 #   pwsh ./check.ps1 -Path docs -Online
 # Exit code 1 when anything is found.
 param(
-    [string[]]$Path = @('docs', 'plugins'),
+    [string[]]$Path = @('docs', 'plugins', 'tests', 'README.md', 'README.en.md', 'MAINTAINING.md'),
     [ValidateSet('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Artifact', 'Shared')]
     [string[]]$Check = @('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Artifact', 'Shared'),
     [switch]$Online
@@ -156,12 +157,23 @@ function Test-Euphony($file, $blocks) {
 
 # ---------- labels ----------
 
+# Labels the format itself requires: rule weight, request lists, navigation,
+# source lines, wrong/right pairs in examples. 1.12 targets explanatory labels.
+$formatLabels = @('Вага', 'Запити', 'Приклади запитів', 'Поруч читати', 'Межа', 'Джерело',
+    'Жанрова примітка', "Ім'я файлу", 'Хибно', 'Правильно')
+# Sentences that end in a colon before a list: 1.12 exempts them, the regex cannot tell.
+$sentenceLeads = @('Автор просить', 'Автор питає', 'HLD тримає концепції', 'LLD тримає значення',
+    'Порядок такий', 'Нотатка атомарна', 'Порушень чотири', 'Третього немає', 'Четвертого виходу немає',
+    'Повністю виключи', 'Рішення не видаляються', "Обов'язкові розділи")
+
 function Test-Label($file, $blocks) {
+    if ($file -match '(^|/)templates/|\.en\.md$') { return }   # template fields; English text
     foreach ($b in $blocks) {
         if ($b.Kind -ne 'para') { continue }
         $t = $b.Text
         if ($t -match '^(\*\*)?([\p{Lu}][\p{Ll}''\u2019\u02BC-]*(?:\s+[\p{L}''\u2019\u02BC-]+){0,2}):(\*\*)?\s+\S') {
             $label = $Matches[2]
+            if ($label -in $formatLabels -or $label -in $sentenceLeads) { continue }
             [pscustomobject]@{ Check = 'Label'; File = $file; Line = $b.Line; Text = "${label}:"; Hint = 'роль ярлика — у саме речення (1.12)' }
         }
     }
@@ -170,6 +182,7 @@ function Test-Label($file, $blocks) {
 # ---------- same opening ----------
 
 function Test-Opening($file, $blocks) {
+    if ($file -match '(^|/)templates/') { return }   # template fields repeat by design
     $sections = [System.Collections.Generic.List[object]]::new()
     $stack = @()
     for ($i = 0; $i -lt $blocks.Count; $i++) {
@@ -260,7 +273,10 @@ function Get-Section([string]$full, [string]$prefix) {
 function Test-Shared {
     $reg = 'docs/shared-signs.md'
     $full = Join-Path $root $reg
-    if (-not (Test-Path $full)) { return }
+    if (-not (Test-Path $full)) {
+        [pscustomobject]@{ Check = 'Shared'; File = $reg; Line = 0; Text = 'реєстру немає'; Hint = 'перевірку не виконано' }
+        return
+    }
     $base = @{
         tech    = 'plugins/ukrainian-tech-docs/skills/ukrainian-tech-docs/references'
         fiction = 'plugins/ukrainian-fiction/skills/ukrainian-fiction/references'
