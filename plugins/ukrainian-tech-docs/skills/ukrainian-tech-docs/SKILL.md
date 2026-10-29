@@ -73,6 +73,7 @@ description: >
 | Палітри схем | Кольори, набори фігур, розміщення файлів схем (`genres/schema.md`) |
 | Місце конвенції метаданих | Де лежать правила frontmatter, тегів, статусів. Скіл метаданих не визначає взагалі |
 | Проєктні жанри | Жанри, описані лише в проєкті, і де вони лежать (розд. 3, «Перелік жанрів відкритий») |
+| Правила комунікації | Звертання до кількох отримувачів, чи може лист бути першоджерелом факту, чи ставлять питання в коментарі трекера (`genres/general.md`, розд. 3 і 7) |
 | Правила проєкту, старші за пакет | Місця, де проєкт свідомо відходить від правила пакета, з причиною. Записане тут — уже рішення; незаписана розбіжність іде за правилом «Старшинство» нижче |
 
 **Порядок.** На вході знайти профіль: вказівник на нього стоїть в інструкціях
@@ -282,7 +283,7 @@ templates/
 - mattpocock/skills, MIT: [`domain-modeling/ADR-FORMAT.md`](https://github.com/mattpocock/skills/blob/49dd158/skills/engineering/domain-modeling/ADR-FORMAT.md) —
   три умови порогу ADR і класи рішень, які варто записувати (`genres/adr.md`);
   [`to-tickets`](https://github.com/mattpocock/skills/blob/49dd158/skills/engineering/to-tickets/SKILL.md) —
-  міграція в три кроки (`genres/howto.md`, розд. 3).
+  міграція зі співіснуванням у три кроки (`genres/howto.md`, розд. 3).
 - knowledge-work-plugins, Apache-2.0:
   [anthropics/knowledge-work-plugins, `engineering`](https://github.com/anthropics/knowledge-work-plugins/tree/main/engineering) —
   розділ «Коли застосовувати» в runbook (`genres/howto.md`, розд. 1) і умова
