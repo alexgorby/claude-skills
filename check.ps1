@@ -357,7 +357,8 @@ function Test-External {
 
 $files = foreach ($p in $Path) {
     $full = Join-Path $root $p
-    if (Test-Path $full -PathType Leaf) { Get-Item $full } else { Get-ChildItem $full -Recurse -Filter *.md }
+    if (Test-Path $full -PathType Leaf) { Get-Item $full }
+    else { Get-ChildItem $full -Recurse -Filter *.md | Where-Object { $_.FullName -notmatch '[\\/]fixtures[\\/]' } }   # test inputs hold errors by design
 }
 
 $found = foreach ($f in $files) {
