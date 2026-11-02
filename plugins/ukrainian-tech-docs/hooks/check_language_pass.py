@@ -9,20 +9,38 @@ import re
 import sys
 
 EXPORT_RE = re.compile(r"\.(docx|xlsx|pdf)\b", re.IGNORECASE)
+# A shell command that only reads or lists such files is not an export.
+BUILD_RE = re.compile(
+    r"pandoc|soffice|libreoffice|wkhtmltopdf|docx2pdf|\s-o\s|--output|\.save\(|"
+    r"SaveAs|Export-|ConvertTo|Packer|build",
+    re.IGNORECASE,
+)
 TEXT_RE = re.compile(r"\.(md|txt|html?)$", re.IGNORECASE)
 WRITE_TOOLS = {"Write", "Edit", "MultiEdit", "NotebookEdit"}
 SHELL_TOOLS = {"Bash", "PowerShell"}
+NOT_HUMAN_PREFIXES = ("<task-notification>", "<system-reminder>")
 
 
 def is_human_turn(entry):
-    if entry.get("type") != "user":
+    # Skill bodies, peer messages, task notifications and compaction summaries
+    # are user entries too; they continue the turn instead of starting one.
+    if entry.get("type") != "user" or entry.get("isMeta") or entry.get("isCompactSummary"):
+        return False
+    origin = entry.get("origin")
+    kind = origin.get("kind") if isinstance(origin, dict) else origin
+    if kind not in (None, "human"):
         return False
     content = entry.get("message", {}).get("content")
     if isinstance(content, str):
-        return True
-    if isinstance(content, list):
-        return any(c.get("type") == "text" for c in content if isinstance(c, dict))
-    return False
+        text = content
+    elif isinstance(content, list):
+        text = " ".join(c.get("text", "") for c in content
+                        if isinstance(c, dict) and c.get("type") == "text")
+        if not text:
+            return False
+    else:
+        return False
+    return not text.lstrip().startswith(NOT_HUMAN_PREFIXES)
 
 
 def tool_uses(entry):
@@ -66,7 +84,7 @@ def main():
             command = str(inp.get("command") or "")
             if name in WRITE_TOOLS and EXPORT_RE.search(target):
                 export_at = step
-            elif name in SHELL_TOOLS and EXPORT_RE.search(command):
+            elif name in SHELL_TOOLS and EXPORT_RE.search(command) and BUILD_RE.search(command):
                 export_at = step
             elif name in WRITE_TOOLS and TEXT_RE.search(target):
                 text_at = step
