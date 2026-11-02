@@ -103,8 +103,9 @@ against vendor documentation is a separate fact-checking pass.
 ## Domain experts (activate by project, at most one)
 
 Domain agents are not part of this plugin. A project that has one names it in
-its profile, slot "Рецензія" (agent name and when to activate it). The task
-then carries that line. Activate the domain expert only under the condition the
+its profile, slot "Рецензія", or in its root file for the agent, line
+"Доменний експерт" (agent name and when to activate it). The task then
+carries that line. Activate the domain expert only under the condition the
 profile states, and only for the project of this subject. No such line in the
 task — no domain expert.
 
