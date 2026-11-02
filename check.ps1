@@ -278,7 +278,7 @@ function Test-Shared {
         return
     }
     $base = @{
-        tech    = 'plugins/ukrainian-tech-docs/skills/ukrainian-tech-docs/references'
+        tech    = 'plugins/ukrainian-tech-docs/shared'
         fiction = 'plugins/ukrainian-fiction/skills/ukrainian-fiction/references'
     }
     $lines = [IO.File]::ReadAllLines($full, [Text.Encoding]::UTF8)
