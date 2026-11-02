@@ -28,8 +28,9 @@ yourself.
   reviewer because "infrastructure has networks".
 - When a condition is borderline and no ceiling is given, take the reviewer and
   say why it is borderline: a missed reviewer costs more than one extra review.
-  Under a ceiling the roster's "Ceiling and scope of judgement" rules win:
-  borderline reviewers are not taken.
+  Under a ceiling the roster's ceiling rules win (section "Ceiling" for a
+  plan, "Ceiling and scope of judgement" for a document): borderline reviewers
+  are not taken.
 - In a partial run judge only the selected parts named in the task; signals
   from parts outside the run do not count. Reasons quote only the selected
   parts: do not write "consistency with the rest of the document".

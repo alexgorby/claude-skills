@@ -16,6 +16,18 @@ genre (HLD, LLD, ТЗ, runbook, concept, report…), and for a document its size
 
 ## Plan
 
+### Ceiling
+
+- The task names a ceiling for a plan too: five reviewers for a short plan (up
+  to ten steps, no sections), seven for a larger one. The three reviewers below
+  (Coherence, Feasibility, Scope) count against it. Never return more `yes` rows
+  than the ceiling.
+- Rank the conditional reviewers by how strong their signal is in the plan
+  text and take the strongest. A borderline reviewer is NOT taken: its `no`
+  reason names which taken reviewer covers its subject (capacity for a first
+  full backup — Feasibility; network prerequisites of a cloud service —
+  Platform).
+
 ### Always
 
 | Reviewer | Agent | Lens |
