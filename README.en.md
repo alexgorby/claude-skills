@@ -14,6 +14,61 @@ The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 | `ukrainian-tech-docs` | Technical documentation — a dispatcher and six skills: writing, language check, fact-checking, export, planning, multi-agent review. A work contract before writing, source discipline and uncertainty markers, living language, genre rules (HLD, LLD, ADR, technical specification (ТЗ), how-to and runbook, concept, reference, troubleshooting, postmortem, diagram, plan), questions to adjacent teams, export to .docx, .xlsx, .pdf or email. Inputs to prepare (in Ukrainian): [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); what each genre is and how to ask for it (in Ukrainian): [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
 | `ukrainian-fiction` | Fiction prose: language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
 
+## Quick start
+
+**Claude Desktop or claude.ai.** With a chat open (not the Code tab), go to
+Customize → Plugins → Add → add marketplace `alexgorby/claude-skills`, then
+Add next to the plugin you need.
+
+**Claude Code:**
+
+```
+/plugin marketplace add alexgorby/claude-skills
+/plugin install ukrainian-tech-docs@alexgorby-skills
+/plugin install ukrainian-fiction@alexgorby-skills
+```
+
+Then just write in Ukrainian: «напиши ADR про …» *(write an ADR on …)*,
+«почисти текст» *(clean up the text)*, «перевір факти» *(check the facts)*,
+«план готовий» *(the plan is ready)*. The matching skill activates on its own.
+Details, updates and Codex — [Installation](#installation).
+
+## What it looks like
+
+> **Before:** Варто зазначити, що резервне копіювання відіграє ключову роль
+> у забезпеченні надійності інфраструктури. Здійснення резервного копіювання
+> відбувається щоночі за допомогою скрипта `backup.ps1`, що дозволяє мінімізувати
+> ризики втрати даних. Таким чином, наше рішення є надійним, масштабованим
+> і гнучким.
+>
+> *("It is worth noting that backup plays a key role in ensuring infrastructure
+> reliability. The performing of backup takes place nightly by means of the
+> `backup.ps1` script, which allows minimising the risks of data loss. Thus, our
+> solution is reliable, scalable and flexible.")*
+>
+> **After:** Резервну копію щоночі знімає скрипт `backup.ps1`.
+> *("The `backup.ps1` script takes a backup every night.")*
+>
+> **Question to the author:** how much data can this scheme lose (RPO), and how
+> long does a restore take? The reliability sentence was removed because it
+> stated no fact.
+
+Every finding cites a rule number: `1.1 · S1` is an empty opener, `1.2 · S2` a
+verbal noun, `1.9 · S2` a forced triad. The full breakdown and a fiction audit
+example (in Ukrainian): [docs/examples.md](docs/examples.md).
+
+## Contents
+
+- [What it can do](#what-it-can-do)
+- [Skills in detail](#skills-in-detail)
+- [What makes it different](#what-makes-it-different)
+- [How it is tested](#how-it-is-tested)
+- [Installation](#installation)
+- [Repository layout](#repository-layout)
+- [Sources](#sources)
+- [License](#license)
+- [Author](#author)
+
 ## What it can do
 
 The matching skill activates on its own when a request resembles one of these. The
@@ -231,30 +286,6 @@ a mechanism and a consequence, not a ready paragraph instead of a question.
 image, a paired abstraction, a filter word and a Russian calque, each with a
 rule number and an option. The full example is in
 [docs/examples.md](docs/examples.md).
-
-## What it looks like
-
-> **Before:** Варто зазначити, що резервне копіювання відіграє ключову роль
-> у забезпеченні надійності інфраструктури. Здійснення резервного копіювання
-> відбувається щоночі за допомогою скрипта `backup.ps1`, що дозволяє мінімізувати
-> ризики втрати даних. Таким чином, наше рішення є надійним, масштабованим
-> і гнучким.
->
-> *("It is worth noting that backup plays a key role in ensuring infrastructure
-> reliability. The performing of backup takes place nightly by means of the
-> `backup.ps1` script, which allows minimising the risks of data loss. Thus, our
-> solution is reliable, scalable and flexible.")*
->
-> **After:** Резервну копію щоночі знімає скрипт `backup.ps1`.
-> *("The `backup.ps1` script takes a backup every night.")*
->
-> **Question to the author:** how much data can this scheme lose (RPO), and how
-> long does a restore take? The reliability sentence was removed because it
-> stated no fact.
-
-Every finding cites a rule number: `1.1 · S1` is an empty opener, `1.2 · S2` a
-verbal noun, `1.9 · S2` a forced triad. The full breakdown and a fiction audit
-example (in Ukrainian): [docs/examples.md](docs/examples.md).
 
 ## What makes it different
 
