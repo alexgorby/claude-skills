@@ -166,6 +166,15 @@ while the Code tab is active, it stays on that computer and chat won't see it.
 
 Updates are manual: Plugins → "⋮" next to the plugin → check for updates → Update.
 
+When you add or update the technical plugin, Claude Desktop warns that it
+"contains components that run code". This is the hook
+`hooks/check_language_pass.py`. At the end of every Claude turn in sessions on
+your computer it reads the current session's transcript. If the turn built a
+`.docx`, `.xlsx` or `.pdf` and there was no language pass after the last text
+change, the hook sends Claude a request to run one; otherwise it does nothing.
+The hook changes no files and makes no network calls. It runs via the `python`
+command, so Python must be on `PATH`.
+
 Review agents and the language-pass hook work in both Claude Code and Claude
 Desktop chat: a test on 02.11.2026 showed this, although Anthropic's
 compatibility table lists them as ignored in chat. claude.ai chat in a browser
