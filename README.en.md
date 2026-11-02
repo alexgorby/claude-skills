@@ -2,9 +2,10 @@
 
 [Українська](README.md) · **English**
 
-Two Claude skills that help write Ukrainian text that doesn't read like a
+Two Claude plugins that help write Ukrainian text that doesn't read like a
 translation or machine output: no calques, no bureaucratese, no AI clichés.
-Each skill is a separate plugin, so you can install one or both.
+The technical plugin has seven skills, the fiction plugin one. You can install
+one plugin or both.
 
 The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 
@@ -15,7 +16,7 @@ The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 
 ## What it can do
 
-A skill activates on its own when a request resembles one of these. The
+The matching skill activates on its own when a request resembles one of these. The
 skills expect Ukrainian requests; the English in brackets is for orientation
 only.
 
@@ -121,16 +122,16 @@ example (in Ukrainian): [docs/examples.md](docs/examples.md).
   confidence level; the verdict is the author's. Disputed pairs were checked
   against dictionaries.
 - **No step gets lost.** Every skill ends with a stages line listing the
-  files it actually read, so a skipped stage shows. A plugin hook stops a turn
-  that built a .docx, .xlsx or .pdf without a language pass over the final
-  text.
+  files it actually read, so a skipped stage shows. If a turn built a .docx,
+  .xlsx or .pdf without a language pass over the final text, a plugin hook
+  stops the turn and asks for that pass.
 - **Two genres, two plugins.** Technical text and fiction follow different
   rules: a character's colloquial line or a deliberate repetition in prose is
   a device, not a defect.
 
 ## How it is tested
 
-Test sets live in [tests/](tests/). The technical skill has 24 synthetic
+Test sets live in [tests/](tests/). The technical plugin has 24 synthetic
 cases: language editing and audit, sources and fact-checking, genres and
 export, plus texts that need no edits. Fiction has 6 human-written passages
 the skill must not "fix". Criteria were fixed before the first run, and the
@@ -150,18 +151,18 @@ rule itself.
 /plugin install ukrainian-fiction@alexgorby-skills
 ```
 
-A skill activates on its own when you ask to write, review or clean up
+The skills activate on their own when you ask to write, review or clean up
 Ukrainian text of the matching genre.
 
 ### Claude Desktop and claude.ai
 
-With a chat open (not the Code tab), go to Settings → Plugins, choose Add →
+With a chat open (not the Code tab), go to Customize → Plugins, choose Add →
 add marketplace and enter `alexgorby/claude-skills` or
 `https://github.com/alexgorby/claude-skills` as the URL. Both plugins then
 appear on the Browse tab; Add installs the one you need.
 
 Where you add it from matters. A marketplace added from chat is saved to your
-claude.ai account, and the plugins work in chat, Cowork and Claude Code. Added
+claude.ai account, and the plugins work in chat, Claude Code and Cowork (where available). Added
 while the Code tab is active, it stays on that computer and chat won't see it.
 
 Updates are manual: Plugins → "⋮" next to the plugin → check for updates → Update.
@@ -180,7 +181,7 @@ Desktop chat: a test on 02.11.2026 showed this, although Anthropic's
 compatibility table lists them as ignored in chat. claude.ai chat in a browser
 has not been tested separately.
 
-Alternatively, upload the skills as archives: Settings → Skills → add custom
+Alternatively, upload the skills as archives: Customize → Skills → add custom
 skill. `pwsh ./build.ps1` builds them into `dist/`: seven archives for the
 technical package, one per skill, each with its own copy of the shared rules.
 Archives carry no agents and no hook: the review runs without subagents, and
