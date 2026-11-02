@@ -6,9 +6,14 @@
 джерела, який ви бачите до запису. Правдивість фактів перевіряють чотири рівні,
 і кожен ловить своє.
 
-Посилання в дужках ведуть у файли скіла
-(`plugins/ukrainian-tech-docs/skills/ukrainian-tech-docs/`); шляхи відраховуються
-від `references/`.
+Посилання в дужках ведуть у файли пакета (`plugins/ukrainian-tech-docs/`).
+Короткі шляхи розгортаються так: `language.md`, `evidence.md`, `genres/` і
+`templates/project-profile.md` лежать у `shared/`; `factcheck.md` — у
+`skills/factcheck/references/`; `export.md` — у `skills/export/references/`;
+`forks-and-questions.md` і `postmortem/` — у `skills/write/references/`, шаблони
+постмортему — у `skills/write/templates/`; `write/SKILL.md` — у `skills/write/`.
+Ту саму карту дає диспетчер пакета (`skills/ukrainian-tech-docs/SKILL.md`,
+розд. 4).
 
 | № | Рівень | Коли працює | Що ловить |
 |---|---|---|---|

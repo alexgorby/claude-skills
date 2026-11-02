@@ -10,7 +10,7 @@ The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 
 | Plugin | Purpose |
 |---|---|
-| `ukrainian-tech-docs` | Technical documentation: a work contract before writing, source discipline and uncertainty markers, living language, genre rules (HLD, LLD, ADR, technical specification (ТЗ), how-to and runbook, concept, reference, troubleshooting, postmortem, diagram, plan), questions to adjacent teams, export to .docx, .xlsx, .pdf or email. Inputs to prepare (in Ukrainian): [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); what each genre is and how to ask for it (in Ukrainian): [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
+| `ukrainian-tech-docs` | Technical documentation — a dispatcher and six skills: writing, language check, fact-checking, export, planning, multi-agent review. A work contract before writing, source discipline and uncertainty markers, living language, genre rules (HLD, LLD, ADR, technical specification (ТЗ), how-to and runbook, concept, reference, troubleshooting, postmortem, diagram, plan), questions to adjacent teams, export to .docx, .xlsx, .pdf or email. Inputs to prepare (in Ukrainian): [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); what each genre is and how to ask for it (in Ukrainian): [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
 | `ukrainian-fiction` | Fiction prose: language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
 
 ## What it can do
@@ -21,17 +21,32 @@ only.
 
 ### ukrainian-tech-docs
 
-| Task | How to ask |
-|---|---|
-| Write a document of a given genre | «Напиши ADR про вибір …» *(write an ADR on choosing …)*, «покрокова інструкція для …» *(step-by-step guide for …)*, «ТЗ на …» *(specification for …)* |
-| Clean text of AI clichés, bureaucratese and calques | «Почисти текст» *(clean up the text)*, «прибери воду» *(cut the fluff)*, «перепиши документ» *(rewrite the document)* |
-| Find calques without editing | «Діагностика кальок» *(calque diagnostics)*, «перевір переклад» *(check the translation)* |
-| Check claims against documentation | «Фактчекінг» *(fact-check)*, «перевір факти» *(check the facts)*, «звір із документацією» *(verify against the docs)* |
-| Check that it reads without the author | «Тест читача» *(reader test)*, «чи зрозуміло це без мене» *(is it clear without me)* |
-| Review a finished specification | «Перевір ТЗ» *(review the spec)* |
-| Translate technical text | «Переклади українською» *(translate into Ukrainian)* |
-| Draft questions to an adjacent team | «Сформулюй питання до мережевиків про …» *(draft questions to the network team about …)* |
-| Build a file for readers outside the team | «Збери docx» *(build a docx)*, «оформи як лист» *(format as an email)* |
+The package has six skills, each doing one job. A request covering several
+jobs at once («підготуй документ для Замовника», *prepare the document for
+the customer*) goes to the dispatcher, which names the skills and their order.
+
+| Task | How to ask | Skill |
+|---|---|---|
+| Write a document of a given genre | «Напиши ADR про вибір …» *(write an ADR on choosing …)*, «покрокова інструкція для …» *(step-by-step guide for …)*, «ТЗ на …» *(specification for …)* | `write` |
+| Rewrite a document, turn notes into a note | «Перепиши документ» *(rewrite the document)*, «оформи як нотатку» *(format as a note)* | `write` |
+| Translate technical text | «Переклади українською» *(translate into Ukrainian)* | `write` |
+| Draft questions to an adjacent team | «Сформулюй питання до мережевиків про …» *(draft questions to the network team about …)* | `write` |
+| Clean text of AI clichés, bureaucratese and calques without touching the meaning | «Почисти текст» *(clean up the text)*, «прибери воду» *(cut the fluff)* | `language` |
+| Find calques without editing | «Діагностика кальок» *(calque diagnostics)*, «перевір переклад» *(check the translation)* | `language` |
+| Check a finished specification | «Перевір ТЗ» *(check the spec)* | `language` |
+| Check claims against documentation | «Фактчекінг» *(fact-check)*, «перевір факти» *(check the facts)*, «звір із документацією» *(verify against the docs)* | `factcheck` |
+| Build a file for readers outside the team | «Збери docx» *(build a docx)*, «оформи як лист» *(format as an email)* | `export` |
+| Draft a work plan | «Спершу план» *(plan first)*, «склади план» *(make a plan)* | `plan` |
+| Independent review of a plan or document | «План готовий» *(the plan is ready)*, «перевір незалежно» *(check independently)*, «рецензія HLD» *(HLD review)* | `review` |
+| Check that it reads without the author | «Тест читача» *(reader test)*, «чи зрозуміло це без мене» *(is it clear without me)* | `review` |
+
+`review` hands a plan or document to several narrow reviewer agents:
+coherence, feasibility, a decision adversary, security, architecture, network
+and others. A separate coordinator agent picks the reviewers, and each sees
+only the subject, not the conversation that produced it. Findings on a
+document also go through an adversary pass, and the main session checks each
+one against its source. Where subagents are unavailable, the review runs in
+one session and is marked as not independent.
 
 **Genres.** Each has its own structure rules and checklist.
 
@@ -105,7 +120,11 @@ example (in Ukrainian): [docs/examples.md](docs/examples.md).
 - **Calques in a separate pass.** A table of suspects with the norm and a
   confidence level; the verdict is the author's. Disputed pairs were checked
   against dictionaries.
-- **Two genres, two skills.** Technical text and fiction follow different
+- **No step gets lost.** Every skill ends with a stages line listing the
+  files it actually read, so a skipped stage shows. A plugin hook stops a turn
+  that built a .docx, .xlsx or .pdf without a language pass over the final
+  text.
+- **Two genres, two plugins.** Technical text and fiction follow different
   rules: a character's colloquial line or a deliberate repetition in prose is
   a device, not a defect.
 
@@ -147,8 +166,15 @@ while the Code tab is active, it stays on that computer and chat won't see it.
 
 Updates are manual: Plugins → "⋮" next to the plugin → check for updates → Update.
 
-Alternatively, upload a skill as an archive: Settings → Skills → add custom
-skill. `pwsh ./build.ps1` builds the archives into `dist/`. Don't keep the
+Review agents and the language-pass hook work in Claude Code. Plugin agents should
+work in Cowork; in chat the review may run without subagents. Neither agents
+in Cowork nor the review in chat has been tested yet.
+
+Alternatively, upload the skills as archives: Settings → Skills → add custom
+skill. `pwsh ./build.ps1` builds them into `dist/`: seven archives for the
+technical package, one per skill, each with its own copy of the shared rules.
+Archives carry no agents and no hook: the review runs without subagents, and
+only the stages line guards the language pass before export. Don't keep the
 plugin and an uploaded copy of the same skill at once: Claude would see two
 identical skills.
 
@@ -164,13 +190,16 @@ codex plugin add ukrainian-fiction@alexgorby-skills
 
 `codex plugin marketplace upgrade` refreshes the marketplace snapshot.
 
-Tested 27.10.2026, Codex 0.164: the skill activates and reads its rules, but
-the report follows them only partly.
+Tested 27.10.2026, Codex 0.164, on the earlier single-skill layout: the skill
+activates and reads its rules, but the report follows them only partly. The
+six-skill layout has not been tested in Codex as a plugin yet; agents and the
+hook likely don't work there.
 
 ### Other agents
 
-A skill is a plain folder with `SKILL.md`. Copy it into the skills folder of
-any agent that supports this format.
+A skill is a plain folder with `SKILL.md`. The technical skills read the
+plugin's shared `shared/` folder, so outside the plugin take the folder from an
+archive built by `build.ps1`, which already has `shared/` inside.
 
 ## Repository layout
 
@@ -179,19 +208,29 @@ any agent that supports this format.
 plugins/
   ukrainian-tech-docs/
     .claude-plugin/plugin.json
-    skills/ukrainian-tech-docs/     SKILL.md, references/, templates/
+    skills/ukrainian-tech-docs/     dispatcher: which skill, in what order
+    skills/write/                   writing: contract, project profile, stages
+    skills/language/                language check and audit
+    skills/factcheck/               fact-checking
+    skills/export/                  export to .docx, .xlsx, .pdf, email
+    skills/plan/                    planning
+    skills/review/                  multi-agent review
+    shared/                         language.md, evidence.md, genres/, profile template
+    agents/                         reviewers for review
+    hooks/                          language-pass check before export
   ukrainian-fiction/
     .claude-plugin/plugin.json
     skills/ukrainian-fiction/       SKILL.md, references/, templates/
-build.ps1                           builds zips for manual upload
+build.ps1                           builds zips for manual upload, one per skill
 ```
 
 ## Sources
 
 The rules are written from scratch in Ukrainian. Some ideas come from research
 and other people's skills; English-specific rules were carried over only where
-they work for Ukrainian. The full list with links is in the "Джерела пакета"
-(Sources) section of each skill's `SKILL.md`.
+they work for Ukrainian. The full list with links is in the technical plugin's `SOURCES.md` (for the
+review, also the "Джерела" section of `skills/review/SKILL.md`) and in the
+"Джерела пакета" (Sources) section of the fiction skill's `SKILL.md`.
 
 ## License
 
