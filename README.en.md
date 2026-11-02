@@ -85,6 +85,153 @@ Each genre in detail and how to ask for it (in Ukrainian):
 The audit returns a table of findings, not a rewritten text: the author
 decides what to change.
 
+## Skills in detail
+
+What each skill does, what it returns and what it does not do. The skills
+answer in Ukrainian, so the request-and-answer examples are in the Ukrainian
+README, section «Скіли докладно» ([README.md](README.md#скіли-докладно)); each
+item below says what its example shows. The examples come from runs on
+02.11.2026 over synthetic texts (a made-up product «Ліхтар», invented notes).
+
+### Dispatcher — `ukrainian-tech-docs`
+
+Takes over when a request covers several jobs at once or it is unclear which
+skill fits. It names the skills needed, their order and why; the work itself
+is done by those skills. Ambiguous requests are settled by a table: "rewrite
+the document" is writing, "clean up the text" is language, "check the spec" is
+a specification audit, an unnamed text type gets one question to the owner.
+*Example:* "prepare a docx for the customer from a two-sentence HLD draft" —
+write, then fact-check only if vendor claims appear, review offered but not
+started, export with a full language pass first; plus a question whether to
+list open questions before writing.
+
+### Writing — `write`
+
+Writes and edits a document of any genre: HLD, LLD, ADR, specification,
+runbook, step-by-step guide, postmortem, email, note, translation, diagram,
+questions to an adjacent team.
+
+- **Contract** — seven lines before the first line of text: genre, reader,
+  whether the document leaves the team, depth boundary (what stays in the HLD
+  and what goes to the LLD), sources, what is out of scope, which stages the
+  work goes through. An objection changes a line.
+- **Project profile** — one file in your project that gives the glossary, code
+  register, source ladder and where the question register lives. No profile —
+  the skill says so and invents nothing.
+- **Sources** — every platform claim carries a source address where it stands.
+  What the sources lack is not in the text: an uncertainty marker or a question
+  goes there instead.
+- **Forks and questions** — when a decision is not the writer's, the skill
+  gives options with the cost of each, an addressee and a recommendation.
+- **Self-check** — the genre checklist, a final language pass, a list of claims
+  without a source, a marker summary and a stages line.
+
+Writing never offers a plan; planning starts only when you ask.
+*Example:* an HLD fragment from a decision record — the contract table with
+an explicit depth exception, the fragment, two questions with options and a
+recommendation, and the stages line.
+
+### Language check — `language`
+
+Checks a finished text and does not edit it unless asked. Modes:
+
+| Mode | Returns |
+|---|---|
+| Language audit | A findings table: where, quote, rule number, level (S1 fixed on first occurrence, S2 when it clusters, S3 only in a cleanup), suggested replacement |
+| Cleanup ("clean up the text", "cut the fluff") | The cleaned text, a table of what was done and a check that no meaning was lost or added |
+| Whole-document audit | An extra table for completeness, genre boundary, security |
+| Calque diagnostics | A table of suspects: word, calque type, English original, replacement, confidence; the verdict is yours |
+| Specification audit | A table "spec line · what is wrong · suggested fix · source" |
+| Final pass | A pass over a finished text before it goes out; writing and export require it |
+
+It does not check facts (`factcheck`) or judge decisions (`review`). A cleanup
+that touches a claim or the meaning is writing.
+*Example:* "cut the fluff, add no facts" on a three-sentence note — the
+evaluative sentence is removed, the table names rule 1.4 (S1 and S2), the
+meaning check says nothing was added, and a question asks for a number if
+"fast processing" is a real requirement.
+
+### Fact-checking — `factcheck`
+
+Checks claims in a finished text against vendor documentation and project
+sources: is the claim true today, for which version and edition. Capabilities,
+limits, requirements, compatibility, versions, command parameters; claims with
+"always", "only", "automatically", "supported" go first. Returns a table of
+claims with status, evidence, source address and the cost of an error; you fill
+in the verdict column. It does not edit the text: a fix is a separate writing
+job. The exception is a step-by-step guide, where an obvious fix from a source
+is made and listed.
+*Example:* three claims about «Ліхтар» 2.0 — one confirmed, two refuted with
+quotes from the source, verdict column left empty.
+
+### Export — `export`
+
+Prepares a document for a reader outside the team: `.docx`, `.xlsx`, `.pdf`,
+email or message. Removes working traces from the final text, formats links,
+tables and diagrams, resolves markers. The last step before the build is a
+full language pass over the final text; a pass made before later edits does
+not count. If the export changes meaning, it is also writing. The plugin hook
+stops a turn that built the file without that pass.
+*Example:* building `note.docx` — the hook caught that the language pass came
+before the text was written to `note.md`; the pass was repeated, and the file
+was not rebuilt because the text had not changed.
+
+### Planning — `plan`
+
+Starts only when you ask ("plan first", "make a plan"); no skill offers it. A
+plan records the task verbatim and completion criteria that can be checked by
+observation. Before full work comes a short "plan for the plan": what to read,
+what to extract, what to check against, what the result looks like, what not
+to do; at this checkpoint you say "yes" or "skip". Steps take the form
+"step · output · state", and a step closes only with evidence. A change of
+the task is added as a delta, not a rewrite. When you say the plan is ready,
+review checks it.
+*Example:* moving a queue service from one VM to two to survive a node
+failure — criteria, reconnaissance, eight steps, and five questions with
+recommendations (is a "node" a host or a VM?).
+
+### Review — `review`
+
+An independent check of a plan or a document by several agents that did not
+see the conversation that produced it. A separate coordinator agent picks
+narrow reviewers: coherence, feasibility, scope, decision adversary, security,
+operations, architecture, network, platform, capacity, requirements, diagrams,
+reality check. A plan has a ceiling: up to five reviewers for a short plan, up
+to seven for a larger one. For a document, a separate adversary agent checks
+every finding (is the quote verbatim, is the severity inflated, is it already
+known). A large document is split among reviewers. The main session checks
+each finding against its source, rejects false ones with a reason and builds
+the report. It does not edit the text: fixes go through writing.
+
+A separate light mode is the **reader test**: one fresh agent reads the
+document without context and says what the named reader would not understand.
+*Examples:* a four-step plan to move backups to Azure Backup — three blockers
+(no trial restore before switching the old script off, no Recovery Services
+vault, no passphrase owner) and one finding rejected against Microsoft Learn;
+a reader test of a four-step runbook — the document answers one of eight
+reader questions.
+
+### ukrainian-fiction
+
+One skill for all fiction work. It holds no book-specific rules: the book
+profile gives them (voice canon, reference passages, glossary, fact canon).
+No profile — the skill says what is missing and invents nothing. Plot, turns
+and the characters' behaviour are the author's: the skill offers options with
+a mechanism and a consequence, not a ready paragraph instead of a question.
+
+| Function | What it does |
+|---|---|
+| Structure | Analyses or plans a scene, episode or chapter at plot level |
+| Writing | A new scene or an edit in the book's voice; reads the reference passages and the end of the previous chapter first |
+| Audit | A findings table with rule, option and confidence; the author decides what to fix. "Clean up" is an audit with language edits |
+| Calque diagnostics | A table of suspects with the norm; edits nothing |
+| Reader test | How a reader without context will read the text; never starts on its own, edits nothing |
+
+*Example:* "does this sound like AI?" on a three-sentence passage — a ready
+image, a paired abstraction, a filter word and a Russian calque, each with a
+rule number and an option. The full example is in
+[docs/examples.md](docs/examples.md).
+
 ## What it looks like
 
 > **Before:** Варто зазначити, що резервне копіювання відіграє ключову роль

@@ -159,7 +159,7 @@ function Test-Euphony($file, $blocks) {
 
 # Labels the format itself requires: rule weight, request lists, navigation,
 # source lines, wrong/right pairs in examples. 1.12 targets explanatory labels.
-$formatLabels = @('Вага', 'Запити', 'Приклади запитів', 'Поруч читати', 'Межа', 'Джерело',
+$formatLabels = @('Вага', 'Запит', 'Запит (тест читача)', 'Запити', 'Приклади запитів', 'Поруч читати', 'Межа', 'Джерело',
     'Жанрова примітка', "Ім'я файлу", 'Хибно', 'Правильно')
 # Sentences that end in a colon before a list: 1.12 exempts them, the regex cannot tell.
 $sentenceLeads = @('Автор просить', 'Автор питає', 'HLD тримає концепції', 'LLD тримає значення',
