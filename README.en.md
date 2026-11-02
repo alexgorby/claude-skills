@@ -166,17 +166,20 @@ while the Code tab is active, it stays on that computer and chat won't see it.
 
 Updates are manual: Plugins → "⋮" next to the plugin → check for updates → Update.
 
-Review agents and the language-pass hook work in Claude Code. Plugin agents should
-work in Cowork; in chat the review may run without subagents. Neither agents
-in Cowork nor the review in chat has been tested yet.
+Review agents and the language-pass hook work in both Claude Code and Claude
+Desktop chat: a test on 02.11.2026 showed this, although Anthropic's
+compatibility table lists them as ignored in chat. claude.ai chat in a browser
+has not been tested separately.
 
 Alternatively, upload the skills as archives: Settings → Skills → add custom
 skill. `pwsh ./build.ps1` builds them into `dist/`: seven archives for the
 technical package, one per skill, each with its own copy of the shared rules.
 Archives carry no agents and no hook: the review runs without subagents, and
-only the stages line guards the language pass before export. Don't keep the
-plugin and an uploaded copy of the same skill at once: Claude would see two
-identical skills.
+only the stages line guards the language pass before export. Uploading the
+archives has not been tested: a claude.ai support article gives a 200-character
+limit for a skill description, and the package's descriptions are longer. Don't
+keep the plugin and an uploaded copy of the same skill at once: Claude would see
+two identical skills.
 
 ### Codex
 
