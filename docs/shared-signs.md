@@ -44,6 +44,6 @@ ukrainian-tech-docs і ukrainian-fiction», 24.10.2026.
 | trailing-negation | Хвостове заперечення | `language.md#1.9` | `sentence.md#Р3` | `Хвостове заперечення` | S2; умова чи вимога — не хвіст | Лише скупчення |
 | aphorism-formula | Афоризм-формула «X — це Y» | `language.md#1.4` | `sentence.md#Р3` | `афоризм-формул` | S1 | У репліці героя — фактура голосу |
 | chat-service-marks | Службові мітки чату | `language.md#1.13` | `language.md#Л11` | `oaicite`, `utm_source` | S1; посилання лишається без `utm_source` | Прибрати |
-| invisible-characters | Невидимі символи й підмінені літери | `../skills/export/references/export.md#0` | `audit.md#А5` | `U+200B`, `BOM` | Пошуком перед збіркою; нічого не видаляти мовчки | Пошуком у фінальному проході; рішення за автором |
+| invisible-characters | Невидимі символи й підмінені літери | `../skills/export/references/export.md#0` | `final-pass.md#А5` | `U+200B`, `BOM` | Пошуком перед збіркою; нічого не видаляти мовчки | Пошуком у фінальному проході; рішення за автором |
 | vocative | Кличний відмінок у звертанні | `genres/general.md#3` | `orthography.md#О8` | `кличн` | У листі — завжди | Персонаж без кличного — через «Словник книги» |
 | agent-instrumental | Пасив з орудним відмінком діяча | `language.md#1.3` | `language.md#Л2` | `орудн`, `діяча` | S2; діяча зробити підметом | Те саме; безособова форма — там, де діяч невідомий або це прийом оповідача |

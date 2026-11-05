@@ -12,7 +12,7 @@ The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 | Plugin | Purpose |
 |---|---|
 | `ukrainian-tech-docs` | Technical documentation — a dispatcher and six skills: writing, language check, fact-checking, export, planning, multi-agent review. A work contract before writing, source discipline and uncertainty markers, living language, genre rules (HLD, LLD, ADR, technical specification (ТЗ), how-to and runbook, concept, reference, troubleshooting, postmortem, diagram, plan), questions to adjacent teams, export to .docx, .xlsx, .pdf or email. Inputs to prepare (in Ukrainian): [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); what each genre is and how to ask for it (in Ukrainian): [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
-| `ukrainian-fiction` | Fiction prose: language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
+| `ukrainian-fiction` | Fiction prose — a dispatcher and four skills: writing, scene and chapter structure, audit and clean-up, reader test. Language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
 
 ## Quick start
 
@@ -195,7 +195,7 @@ Checks a finished text and does not edit it unless asked. Modes:
 | Language audit | A findings table: where, quote, rule number, level (S1 fixed on first occurrence, S2 when it clusters, S3 only in a cleanup), suggested replacement |
 | Cleanup ("clean up the text", "cut the fluff") | The cleaned text, a table of what was done and a check that no meaning was lost or added |
 | Whole-document audit | An extra table for completeness, genre boundary, security |
-| Calque diagnostics | A table of suspects: word, calque type, English original, replacement, confidence; the verdict is yours |
+| Calque diagnostics (`audit`) | A table of suspects: word, calque type, English original, replacement, confidence; the verdict is yours |
 | Specification audit | A table "spec line · what is wrong · suggested fix · source" |
 | Final pass | A pass over a finished text before it goes out; writing and export require it |
 
@@ -268,7 +268,7 @@ reader questions.
 
 ### ukrainian-fiction
 
-One skill for all fiction work. It holds no book-specific rules: the book
+A dispatcher and four skills: `write`, `scene`, `audit`, `reader`. The pack holds no book-specific rules: the book
 profile gives them (voice canon, reference passages, glossary, fact canon).
 No profile — the skill says what is missing and invents nothing. Plot, turns
 and the characters' behaviour are the author's: the skill offers options with
@@ -276,11 +276,11 @@ a mechanism and a consequence, not a ready paragraph instead of a question.
 
 | Function | What it does |
 |---|---|
-| Structure | Analyses or plans a scene, episode or chapter at plot level |
-| Writing | A new scene or an edit in the book's voice; reads the reference passages and the end of the previous chapter first |
-| Audit | A findings table with rule, option and confidence; the author decides what to fix. "Clean up" is an audit with language edits |
-| Calque diagnostics | A table of suspects with the norm; edits nothing |
-| Reader test | How a reader without context will read the text; never starts on its own, edits nothing |
+| Structure (`scene`) | Analyses or plans a scene, episode or chapter at plot level |
+| Writing (`write`) | A new scene or an edit in the book's voice; reads the reference passages and the end of the previous chapter first |
+| Audit (`audit`) | A findings table with rule, option and confidence; the author decides what to fix. "Clean up" is an audit with language edits |
+| Calque diagnostics (`audit`) | A table of suspects with the norm; edits nothing |
+| Reader test (`reader`) | How a reader without context will read the text: a reader agent gets only the chapter text; never starts on its own, edits nothing |
 
 *Example:* "does this sound like AI?" on a three-sentence passage — a ready
 image, a paired abstraction, a filter word and a Russian calque, each with a
@@ -411,7 +411,13 @@ plugins/
     hooks/                          language-pass check before export
   ukrainian-fiction/
     .claude-plugin/plugin.json
-    skills/ukrainian-fiction/       SKILL.md, references/, templates/
+    skills/ukrainian-fiction/       dispatcher: which skill to use and in what order
+    skills/write/                   writing: scope, book profile, stages
+    skills/scene/                   scene, episode and chapter structure
+    skills/audit/                   audit and clean-up
+    skills/reader/                  reader test
+    shared/                         language, calques, orthography, sentence, dialogue, structure, final pass, profile template
+    agents/                         reader agent for reader
 build.ps1                           builds zips for manual upload, one per skill
 ```
 
