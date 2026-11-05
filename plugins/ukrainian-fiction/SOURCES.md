@@ -1,6 +1,7 @@
 # Джерела пакета
 
-Дослідження і готові скіли, на яких зібрано правила пакета `ukrainian-fiction`.
+Дослідження і готові скіли, на основі яких укладено правила пакета
+`ukrainian-fiction`.
 Посилання на скіли закріплено на коміті, щоб текст за адресою не змінився.
 
 - Russell та ін., «StoryScope: Investigating idiosyncrasies in AI fiction»,
@@ -29,17 +30,17 @@
   [phase3-writing.md](https://github.com/penglonghuang/chinese-novelist-skill/blob/6a64a04/references/flows/phase3-writing.md) —
   еталонні абзаци голосу, які читаються останніми перед письмом глави разом
   із кінцем попередньої, і заміна еталона абзацом із готової глави (слот
-  «Еталонні уривки», `write/SKILL.md`, розд. 2). Довжину уривків у знаках із
+  «Еталонні уривки», `shared/profile.md`). Довжину уривків у знаках із
   джерела не взято.
 - Українські адаптації humanizer, усі MIT, узято лише ідеї, текст власний:
   [iosipov27/ukrainian-humanizer](https://github.com/iosipov27/ukrainian-humanizer) —
-  що шукати в еталонному уривку (`write/SKILL.md`, розд. 2);
+  що шукати в еталонному уривку (`shared/profile.md`);
   [asaulyuk/humanizer-ukr](https://github.com/asaulyuk/humanizer-ukr) — активні
   дієприкметники й кальки (`calques.md`, К1), канцелярит (Л13), кличний відмінок
   (`orthography.md`, О8), регіональна норма (Р8);
   [tatet-ua/tatet-humanizer](https://github.com/tatet-ua/tatet-humanizer) —
   службові мітки чату (Л11), хвостове заперечення (Р3), ознаки живого тексту
-  (Р8), прийоми самої чистки (`audit.md`, А4);
+  (Р8), прийоми самої чистки (`shared/findings.md`, А4);
   [majlovskij-cmd/humanizer-ua](https://github.com/majlovskij-cmd/humanizer-ua) —
   приклади кальок із російської. Заборону тире, «додавай голос» і автозаміни
   не перенесено (Р9).

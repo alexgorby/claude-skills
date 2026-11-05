@@ -416,7 +416,7 @@ plugins/
     skills/scene/                   scene, episode and chapter structure
     skills/audit/                   audit and clean-up
     skills/reader/                  reader test
-    shared/                         language, calques, orthography, sentence, dialogue, structure, final pass, profile template
+    shared/                         book profile, findings table, final pass, language, calques, orthography, sentence, dialogue, structure, profile template
     agents/                         reader agent for reader
 build.ps1                           builds zips for manual upload, one per skill
 ```
