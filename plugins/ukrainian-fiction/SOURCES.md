@@ -27,7 +27,11 @@
 - beautiful-prose: [SKILL.md](https://github.com/shadowpr0/beautiful_prose/blob/bf44efb/SKILL.md)
   (узято лише для переліку того, що не переноситься, Р9).
 - author-toolkit, MIT: [fiction-workshop/SKILL.md, Stage 3](https://github.com/rhavekost/author-toolkit/blob/b782870/skills/fiction-workshop/SKILL.md) —
-  читацький тест субагентом без Біблії книги (`reader-test.md`, А6).
+  читацький тест субагентом без Біблії книги (`reader-test.md`, А6);
+  [fiction-workshop/references/continuity-tracking.md](https://github.com/rhavekost/author-toolkit/blob/b782870/skills/fiction-workshop/references/continuity-tracking.md) —
+  категорії безперервності (знання, тіло й речі, час, правила світу), «хто
+  кому що сказав», обидва місця розбіжності з главами й наслідки далі
+  (`continuity/SKILL.md`, Б1–Б6).
 - chinese-novelist-skill, MIT:
   [phase2-planning.md](https://github.com/penglonghuang/chinese-novelist-skill/blob/6a64a04/references/flows/phase2-planning.md),
   [phase3-writing.md](https://github.com/penglonghuang/chinese-novelist-skill/blob/6a64a04/references/flows/phase3-writing.md) —
