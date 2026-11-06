@@ -12,7 +12,7 @@ The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 | Plugin | Purpose |
 |---|---|
 | `ukrainian-tech-docs` | Technical documentation — a dispatcher and six skills: writing, language check, fact-checking, export, planning, multi-agent review. A work contract before writing, source discipline and uncertainty markers, living language, genre rules (HLD, LLD, ADR, technical specification (ТЗ), how-to and runbook, concept, reference, troubleshooting, postmortem, diagram, plan), questions to adjacent teams, export to .docx, .xlsx, .pdf or email. Inputs to prepare (in Ukrainian): [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); what each genre is and how to ask for it (in Ukrainian): [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
-| `ukrainian-fiction` | Fiction prose — a dispatcher and four skills: writing, scene and chapter structure, audit and clean-up, reader test. Language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
+| `ukrainian-fiction` | Fiction prose — a dispatcher and five skills: writing, scene and chapter structure, audit and clean-up, reader test, book setup and character cards. Language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
 
 ## Quick start
 
@@ -136,6 +136,7 @@ Each genre in detail and how to ask for it (in Ukrainian):
 | Find calques | «Діагностика кальок у главі» *(calque diagnostics in the chapter)* |
 | Check one level only | «Перевір будову глави» *(check the chapter structure)*, «перевір тільки діалоги» *(check the dialogue only)* |
 | Read a chapter as a reader would | «Тест читача» *(reader test)*, «прожени главу очима читача» *(run the chapter past a reader)* |
+| Set up a book | «Налаштуй книгу» *(set up the book)*, «створи картку персонажа» *(create a character card)*, «перевір картку героя» *(check a character card)* |
 
 The audit returns a table of findings, not a rewritten text: the author
 decides what to change.
@@ -268,7 +269,7 @@ reader questions.
 
 ### ukrainian-fiction
 
-A dispatcher and four skills: `write`, `scene`, `audit`, `reader`. The pack holds no book-specific rules: the book
+A dispatcher and five skills: `write`, `scene`, `audit`, `reader`, `setup`. The pack holds no book-specific rules: the book
 profile gives them (voice canon, reference passages, glossary, fact canon).
 No profile — the skill says what is missing and invents nothing. Plot, turns
 and the characters' behaviour are the author's: the skill offers options with
@@ -277,10 +278,11 @@ a mechanism and a consequence, not a ready paragraph instead of a question.
 | Function | What it does |
 |---|---|
 | Structure (`scene`) | Analyses or plans a scene, episode or chapter at plot level |
-| Writing (`write`) | A new scene or an edit in the book's voice; reads the reference passages and the end of the previous chapter first |
+| Writing (`write`) | A new scene or an edit in the book's voice; reads the reference passages and the end of the previous chapter first; characters' lines follow their cards, and for choosing phrases it offers a prompt the author runs in different models |
 | Audit (`audit`) | A findings table with rule, option and confidence; the author decides what to fix. "Clean up" is an audit with language edits |
 | Calque diagnostics (`audit`) | A table of suspects with the norm; edits nothing |
-| Reader test (`reader`) | How a reader without context will read the text: a reader agent gets only the chapter text; never starts on its own, edits nothing |
+| Reader test (`reader`) | How a reader without context will read the text: a reader agent gets only the chapter text; where the book profile allows, an OpenAI model reads it in parallel; never starts on its own, edits nothing |
+| Setup (`setup`) | A wizard sets up the book profile and character cards step by step from the template; checks an existing card and edits nothing in it |
 
 *Example:* "does this sound like AI?" on a three-sentence passage — a ready
 image, a paired abstraction, a filter word and a Russian calque, each with a
@@ -416,7 +418,8 @@ plugins/
     skills/scene/                   scene, episode and chapter structure
     skills/audit/                   audit and clean-up
     skills/reader/                  reader test
-    shared/                         book profile, findings table, final pass, language, calques, orthography, sentence, dialogue, structure, profile template
+    skills/setup/                   book setup wizard, character cards
+    shared/                         book profile, findings table, final pass, language, calques, orthography, sentence, dialogue, structure, character card, wizard, templates
     agents/                         reader agent for reader
 build.ps1                           builds zips for manual upload, one per skill
 ```
