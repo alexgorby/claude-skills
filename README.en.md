@@ -280,7 +280,7 @@ confirmation, for one scene.
 | Function | What it does |
 |---|---|
 | Structure (`scene`) | Analyses or plans a scene, episode or chapter at plot level |
-| Scene ideas (`ideas`) | When there is no plan yet: several scene or turn ideas, each with a mechanism, consequence and risk, then the chosen one is developed in dialogue with the author into an outline. The book profile sets the mode; the "fully AI" mode starts only on the author's explicit request and confirmation |
+| Scene ideas (`ideas`) | When there is no plan yet or only a seed: several scene or turn ideas, each with a mechanism, consequence and risk, then the chosen one is developed in dialogue with the author into an outline. The author's request or the book profile sets the mode; the "fully AI" mode starts only on the author's explicit request and confirmation |
 | Writing (`write`) | A new scene or an edit in the book's voice; reads the reference passages and the end of the previous chapter first; characters' lines follow their cards, and for choosing phrases it offers a prompt the author runs in different models |
 | Audit (`audit`) | A findings table with rule, option and confidence; the author decides what to fix. "Clean up" is an audit with language edits |
 | Calque diagnostics (`audit`) | A table of suspects with the norm; edits nothing |
