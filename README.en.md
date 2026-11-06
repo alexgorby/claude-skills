@@ -12,7 +12,7 @@ The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 | Plugin | Purpose |
 |---|---|
 | `ukrainian-tech-docs` | Technical documentation — a dispatcher and six skills: writing, language check, fact-checking, export, planning, multi-agent review. A work contract before writing, source discipline and uncertainty markers, living language, genre rules (HLD, LLD, ADR, technical specification (ТЗ), how-to and runbook, concept, reference, troubleshooting, postmortem, diagram, plan), questions to adjacent teams, export to .docx, .xlsx, .pdf or email. Inputs to prepare (in Ukrainian): [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); what each genre is and how to ask for it (in Ukrainian): [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
-| `ukrainian-fiction` | Fiction prose — a dispatcher and five skills: writing, scene and chapter structure, audit and clean-up, reader test, book setup and character cards. Language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
+| `ukrainian-fiction` | Fiction prose — a dispatcher and six skills: writing, scene and chapter structure, scene ideas, audit and clean-up, reader test, book setup and character cards. Language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
 
 ## Quick start
 
@@ -269,15 +269,18 @@ reader questions.
 
 ### ukrainian-fiction
 
-A dispatcher and five skills: `write`, `scene`, `audit`, `reader`, `setup`. The pack holds no book-specific rules: the book
+A dispatcher and six skills: `write`, `scene`, `ideas`, `audit`, `reader`, `setup`. The pack holds no book-specific rules: the book
 profile gives them (voice canon, reference passages, glossary, fact canon).
 No profile — the skill says what is missing and invents nothing. Plot, turns
 and the characters' behaviour are the author's: the skill offers options with
 a mechanism and a consequence, not a ready paragraph instead of a question.
+Only the author can hand structure over to AI: by an explicit request and a
+confirmation, for one scene.
 
 | Function | What it does |
 |---|---|
 | Structure (`scene`) | Analyses or plans a scene, episode or chapter at plot level |
+| Scene ideas (`ideas`) | When there is no plan yet: several scene or turn ideas, each with a mechanism, consequence and risk, then the chosen one is developed in dialogue with the author into an outline. The book profile sets the mode; the "fully AI" mode starts only on the author's explicit request and confirmation |
 | Writing (`write`) | A new scene or an edit in the book's voice; reads the reference passages and the end of the previous chapter first; characters' lines follow their cards, and for choosing phrases it offers a prompt the author runs in different models |
 | Audit (`audit`) | A findings table with rule, option and confidence; the author decides what to fix. "Clean up" is an audit with language edits |
 | Calque diagnostics (`audit`) | A table of suspects with the norm; edits nothing |
@@ -416,6 +419,7 @@ plugins/
     skills/ukrainian-fiction/       dispatcher: which skill to use and in what order
     skills/write/                   writing: scope, book profile, stages
     skills/scene/                   scene, episode and chapter structure
+    skills/ideas/                   scene and turn ideas, three modes
     skills/audit/                   audit and clean-up
     skills/reader/                  reader test
     skills/setup/                   book setup wizard, character cards

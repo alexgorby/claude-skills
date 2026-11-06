@@ -14,7 +14,7 @@
     {
       "name": "ukrainian-fiction",
       "source": "./plugins/ukrainian-fiction",
-      "description": "Ukrainian fiction prose: a dispatcher and five skills (writing, scene and chapter structure, audit and clean-up, reader test, book setup and character cards); language without calques and AI clichés, orthography, sentence, dialogue"
+      "description": "Ukrainian fiction prose: a dispatcher and six skills (writing, scene and chapter structure, scene ideas, audit and clean-up, reader test, book setup and character cards); language without calques and AI clichés, orthography, sentence, dialogue"
     }
   ]
 }
