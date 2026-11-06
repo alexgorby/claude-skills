@@ -6,6 +6,9 @@
 
 - Russell та ін., «StoryScope: Investigating idiosyncrasies in AI fiction»,
   [arXiv 2604.03136v6](https://arxiv.org/html/2604.03136v6).
+  Розмір тестового набору стаття подає по-різному: у §3 — 1 377 запитів
+  (8 262 оповідання), у дод. D — 1 384 (8 301). Дод. H і табл. 13 узгоджені
+  з §3. У правила пакета це число не входить.
 - Sepia, прохід будови оповіді й прохід стилю, MIT:
   [narrative-pass.md](https://github.com/Nanako0129/sepia/blob/d6cc9cb/skills/sepia/references/narrative-pass.md),
   [discourse-pass.md](https://github.com/Nanako0129/sepia/blob/d6cc9cb/skills/sepia/references/discourse-pass.md),
