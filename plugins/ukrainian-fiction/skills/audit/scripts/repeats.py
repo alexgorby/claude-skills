@@ -103,12 +103,34 @@ def segments(path):
         yield cur
 
 
-def collect(paths, max_n):
+def chapter_labels(files):
+    """Unique chapter files in the given order and a readable label for each.
+
+    The same file passed twice is counted once. Files with the same name in
+    different folders get the parent folder in the label, so they stay
+    separate chapters.
+    """
+    paths, seen = [], set()
+    for f in files:
+        ap = os.path.normcase(os.path.abspath(f))
+        if ap not in seen:
+            seen.add(ap)
+            paths.append(f)
+    base = [os.path.splitext(os.path.basename(p))[0] for p in paths]
+    labels = []
+    for p, b in zip(paths, base):
+        if base.count(b) > 1:
+            parent = os.path.basename(os.path.dirname(os.path.abspath(p)))
+            b = f"{parent}/{b}"
+        labels.append(b)
+    return paths, labels
+
+
+def collect(paths, labels, max_n):
     # key (tuple of stems) -> list of (chapter, line); first surface form
     places = defaultdict(list)
     surface = {}
-    for path in paths:
-        chapter = os.path.splitext(os.path.basename(path))[0]
+    for path, chapter in zip(paths, labels):
         for seg in segments(path):
             words = [w for w, _ in seg]
             lower = [EUPHONY.get(w.lower(), w.lower()) for w in words]
@@ -147,9 +169,9 @@ def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 
-    places, surface = collect(args.files, max(2, args.max_n))
-    order = [os.path.splitext(os.path.basename(p))[0] for p in args.files]
-    rank = {c: i for i, c in enumerate(order)}
+    paths, labels = chapter_labels(args.files)
+    places, surface = collect(paths, labels, max(2, args.max_n))
+    rank = {c: i for i, c in enumerate(labels)}
 
     hits = [k for k, v in places.items() if len({c for c, _ in v}) >= args.min_chapters]
     keep = drop_contained(hits, places)
