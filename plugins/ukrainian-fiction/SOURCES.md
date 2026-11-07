@@ -51,6 +51,20 @@
   [majlovskij-cmd/humanizer-ua](https://github.com/majlovskij-cmd/humanizer-ua) —
   приклади кальок із російської. Заборону тире, «додавай голос» і автозаміни
   не перенесено (Р9).
+- Поглиблення сцени й проміжні сцени (`scene-chapter.md`, С18), узято лише ідеї,
+  текст власний; огляд — нота проєкту «поглиблення сцен і проміжні сцени —
+  чужі підходи», 2026-11-07:
+  creative-writing-skills, Apache 2.0, [chapter-and-scene.md](https://github.com/haowjy/creative-writing-skills/blob/0d5bf7f/cw/skills/story-planning/resources/story-architecture/chapter-and-scene.md)
+  і `scene-construction.md` (вище) — вага переходу, відомість — у наявну сцену;
+  chinese-novelist-skill, MIT, [content-expansion.md](https://github.com/penglonghuang/chinese-novelist-skill/blob/6a64a04/references/guides/content-expansion.md) —
+  причина тонкої сцени перед розширенням, місце в паузі, тест «чи гірше без
+  нього» (числову норму знаків не взято);
+  author-toolkit, MIT, [developmental-editing.md](https://github.com/rhavekost/author-toolkit/blob/b782870/skills/fiction-workshop/references/developmental-editing.md) —
+  прапорці пропущеного переходу й осмислення;
+  jwynia/agent-skills, MIT, [scene-sequencing](https://github.com/jwynia/agent-skills/blob/e02ec7e226a6e4f8419fd3b88a1d8e472d421b32/skills/creative/fiction/structure/scene-sequencing/SKILL.md) —
+  «сцена — відгук» як одна з оптик;
+  [блог Sudowrite про Expand](https://sudowrite.com/blog/how-to-write-longer-scenes-expand-feature/) —
+  слабкий сюжетний такт лагодять будовою, а не прикрасами.
 - Український правопис 2019, офіційний текст МОН:
   [ukr.pravopys-2019.pdf](https://mon.gov.ua/static-objects/mon/sites/1/zagalna%20serednya/Pravopys.2019/ukr.pravopys-2019.pdf).
 
