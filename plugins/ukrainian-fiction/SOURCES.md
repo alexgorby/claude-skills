@@ -63,6 +63,9 @@
   прапорці пропущеного переходу й осмислення;
   jwynia/agent-skills, MIT, [scene-sequencing](https://github.com/jwynia/agent-skills/blob/e02ec7e226a6e4f8419fd3b88a1d8e472d421b32/skills/creative/fiction/structure/scene-sequencing/SKILL.md) —
   «сцена — відгук» як одна з оптик;
+  danjdewhurst/story-skills, `scene-craft`, [try-fail.md](https://github.com/danjdewhurst/story-skills/blob/main/skills/scene-craft/references/try-fail.md)
+  (за відповіддю Perplexity, посилання на гілку `main`, ліцензію не перевірено) —
+  місток не вигадує конфлікту заради драматургії;
   [блог Sudowrite про Expand](https://sudowrite.com/blog/how-to-write-longer-scenes-expand-feature/) —
   слабкий сюжетний такт лагодять будовою, а не прикрасами.
 - Український правопис 2019, офіційний текст МОН:
