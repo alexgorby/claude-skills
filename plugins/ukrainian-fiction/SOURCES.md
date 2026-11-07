@@ -68,6 +68,31 @@
   місток не вигадує конфлікту заради драматургії;
   [блог Sudowrite про Expand](https://sudowrite.com/blog/how-to-write-longer-scenes-expand-feature/) —
   слабкий сюжетний такт лагодять будовою, а не прикрасами.
+- Повтори між главами (`audit.md`, А8; `scene-chapter.md`, С19, С20) і
+  складники читацького інтересу (`reader-test.md`, А6, п. 3 і п. 9), узято
+  лише ідеї, текст власний; огляд — нота проєкту «повтори між главами й
+  складники читацького інтересу — чужі підходи», 2026-11-07:
+  K. M. Weiland, [шість питань проти однакових сцен](https://www.goodreads.com/author_blog_posts/21853881-6-questions-to-help-you-avoid-repetitive-scenes)
+  (передрук із блогу Helping Writers Become Authors) — питання про повтор
+  сцени (С19), без обов'язкового списку;
+  ProWritingAid ([Echoes](https://prowritingaid.com/art/345/How-to-use----The-Repeats-Check.aspx),
+  [All Repeats](https://help.prowritingaid.com/article/48-how-to-use-the-repeats-check))
+  і AutoCrit ([Repeated phrases](https://www.autocrit.com/editing/support/repeated-phrases-how-autocrit-can-help/),
+  [Phrase Frequency](https://www.autocrit.com/support/repetition/)) —
+  два масштаби повтору, близький і на весь рукопис, і частота зворотів із
+  кількох слів як джерело кандидатів (скрипт А8); лише ідеї з публічних
+  сторінок, як працюють самі інструменти, не перевірено;
+  creative-writing-skills, Apache 2.0, [reader-sim](https://github.com/haowjy/creative-writing-skills/blob/0d5bf7f/cw/skills/reader-sim/SKILL.md) —
+  читач описує досвід, а не оцінює за переліком (А6, п. 3), і
+  [developmental-edit.md](https://github.com/haowjy/creative-writing-skills/blob/0d5bf7f/cw/skills/story-review/resources/developmental-edit.md) —
+  жанрова обіцянка, рівна напруга без перепадів притуплює (С20);
+  анкети бета-читачів ([authority.pub](https://authority.pub/?p=6061),
+  [thepromptindex](https://www.thepromptindex.com/prompt/1758-beta-reader-questionnaire-for-your-book)) —
+  «де пробігав очима», «що чекаєш далі», правдоподібність вчинків;
+  stop-slop, MIT, [structures.md](https://github.com/hardikpandya/stop-slop/blob/8da1f03/references/structures.md) —
+  та сама формула іншими словами: повтор видно за будовою, а не за рядками
+  (А8). Окремої поради про паузу посеред загрози (С20) у джерелах не
+  знайдено: пункт сформульовано в пакеті.
 - Український правопис 2019, офіційний текст МОН:
   [ukr.pravopys-2019.pdf](https://mon.gov.ua/static-objects/mon/sites/1/zagalna%20serednya/Pravopys.2019/ukr.pravopys-2019.pdf).
 
