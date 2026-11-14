@@ -13,9 +13,10 @@
 #                invisible characters (U+200B, U+200D, U+2060, U+FEFF past the start,
 #                U+00AD) and Latin homoglyphs inside a Cyrillic word
 #                (language.md 1.13; export.md, розд. 0)
-#   Shared      signs shared by both packages (docs/shared-signs.md): each point
+#   Shared      (not run by default; the packages are independent since 2026-11-14 and
+#               the registry docs/shared-signs.md was removed) signs shared by both packages: each point
 #                exists and carries every form marker. Repo-wide, ignores -Path;
-#                runs by default only when -Path is not given
+#                runs only with -Check Shared
 #
 # Usage:
 #   pwsh ./check.ps1                         # docs/, plugins/, tests/ and root docs, all checks, offline
@@ -26,7 +27,7 @@
 param(
     [string[]]$Path = @('docs', 'plugins', 'tests', 'README.md', 'README.en.md', 'MAINTAINING.md'),
     [ValidateSet('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Artifact', 'Shared')]
-    [string[]]$Check = @('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Artifact', 'Shared'),
+    [string[]]$Check = @('Url', 'Placeholder', 'Euphony', 'Label', 'Opening', 'Artifact'),
     [switch]$Online
 )
 if ($PSBoundParameters.ContainsKey('Path') -and -not $PSBoundParameters.ContainsKey('Check')) {

@@ -87,7 +87,7 @@
 останній уточнено за незалежним читанням глави (2026-11-11): вада — готовий
 висновок, а не форма думки.
 Рядки «Протиставлення без предмета» й «Однакова зв'язка на початку сусідніх
-речень» — зі звірки з технічним пакетом `ukrainian-tech-docs`, 24.10.2026: форма
+речень» — зі звірки 24.10.2026: форма
 ознаки спільна, вердикт — свій для прози.
 Джерела решти шаблонів: [stop-slop, structures.md](https://github.com/hardikpandya/stop-slop/blob/8da1f03/references/structures.md),
 [deslop](https://github.com/stephenturner/skill-deslop/blob/a906154/SKILL.md),
