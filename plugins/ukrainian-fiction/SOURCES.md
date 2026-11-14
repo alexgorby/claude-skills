@@ -51,7 +51,7 @@
   [majlovskij-cmd/humanizer-ua](https://github.com/majlovskij-cmd/humanizer-ua) —
   приклади кальок із російської. Заборону тире, «додавай голос» і автозаміни
   не перенесено (Р9).
-- Поглиблення сцени й проміжні сцени (`scene-chapter.md`, С18), узято лише ідеї,
+- Пропуски, стиснення і поглиблення сцени (`scene-chapter.md`, С18), узято лише ідеї,
   текст власний; огляд — нота проєкту «поглиблення сцен і проміжні сцени —
   чужі підходи», 2026-11-07:
   creative-writing-skills, Apache 2.0, [chapter-and-scene.md](https://github.com/haowjy/creative-writing-skills/blob/0d5bf7f/cw/skills/story-planning/resources/story-architecture/chapter-and-scene.md)
