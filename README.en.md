@@ -116,6 +116,7 @@ one session and is marked as not independent.
 | Step-by-step guide | Actions only, for a reader doing them for the first time: verified prerequisites, step by step |
 | Concept | How a component works |
 | Reference | Tables, data schemas, codes; no prose |
+| Sequence checklist | An overview for a manager, from the event that opens the work to the handover; the status of each step |
 | Troubleshooting | A case record, symptom first |
 | Postmortem | Closing an incident after service is restored |
 | Security document | How the system is protected: access, secrets, network surface, data, supply chain |
