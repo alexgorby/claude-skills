@@ -4,7 +4,7 @@
 
 Two Claude plugins that help write Ukrainian text that doesn't read like a
 translation or machine output: no calques, no bureaucratese, no AI clichés.
-The technical plugin has seven skills, the fiction plugin one. You can install
+The technical plugin has seven skills, the fiction plugin nine. You can install
 one plugin or both.
 
 The skills themselves are written in Ukrainian and are meant for Ukrainian text.
@@ -12,7 +12,7 @@ The skills themselves are written in Ukrainian and are meant for Ukrainian text.
 | Plugin | Purpose |
 |---|---|
 | `ukrainian-tech-docs` | Technical documentation — a dispatcher and six skills: writing, language check, fact-checking, export, planning, multi-agent review. A work contract before writing, source discipline and uncertainty markers, living language, genre rules (HLD, LLD, ADR, technical specification (ТЗ), how-to and runbook, concept, reference, troubleshooting, postmortem, diagram, plan), questions to adjacent teams, export to .docx, .xlsx, .pdf or email. Inputs to prepare (in Ukrainian): [docs/ukrainian-tech-docs-inputs.md](docs/ukrainian-tech-docs-inputs.md); what each genre is and how to ask for it (in Ukrainian): [docs/ukrainian-tech-docs-genres.md](docs/ukrainian-tech-docs-genres.md) |
-| `ukrainian-fiction` | Fiction prose — a dispatcher and seven skills: writing, scene and chapter structure, scene ideas, audit and clean-up, reader test, book setup and character cards, continuity and world catalogues. Language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
+| `ukrainian-fiction` | Fiction prose — a dispatcher and eight skills: writing, scene and chapter structure, scene ideas, audit and clean-up, reader test, book setup, character cards, continuity and world catalogues. Language without calques and AI clichés, orthography and euphony, sentence and paragraph, dialogue, scene and chapter structure, audit of a finished text. Also works for checking text that is already written, your own or generated. Book-specific rules (characters, glossary, lore, tone) are not part of the skill; they should come from a book profile |
 
 ## Quick start
 
@@ -136,7 +136,8 @@ Each genre in detail and how to ask for it (in Ukrainian):
 | Find calques | «Діагностика кальок у главі» *(calque diagnostics in the chapter)* |
 | Check one level only | «Перевір будову глави» *(check the chapter structure)*, «перевір тільки діалоги» *(check the dialogue only)* |
 | Read a chapter as a reader would | «Тест читача» *(reader test)*, «прожени главу очима читача» *(run the chapter past a reader)* |
-| Set up a book | «Налаштуй книгу» *(set up the book)*, «створи картку персонажа» *(create a character card)*, «перевір картку героя» *(check a character card)* |
+| Set up a book | «Налаштуй книгу» *(set up the book)*, «перевір профіль книги» *(check the book profile)* |
+| Create or check a character card | «Створи картку персонажа» *(create a character card)*, «згенеруй картку» *(generate a card)*, «перевір картку героя» *(check a character card)*, «звір картку з главами» *(check the card against the chapters)* |
 
 The audit returns a table of findings, not a rewritten text: the author
 decides what to change.
@@ -269,7 +270,7 @@ reader questions.
 
 ### ukrainian-fiction
 
-A dispatcher and seven skills: `write`, `scene`, `ideas`, `audit`, `reader`, `setup`, `continuity`. The pack holds no book-specific rules: the book
+A dispatcher and eight skills: `write`, `scene`, `ideas`, `audit`, `reader`, `setup`, `characters`, `continuity`. The pack holds no book-specific rules: the book
 profile gives them (voice canon, reference passages, glossary, fact canon).
 No profile — the skill says what is missing and invents nothing. Plot, turns
 and the characters' behaviour are the author's: the skill offers options with
@@ -285,8 +286,9 @@ confirmation, for one scene.
 | Audit (`audit`) | A findings table with rule, option and confidence; the author decides what to fix. "Clean up" is an audit with language edits |
 | Calque diagnostics (`audit`) | A table of suspects with the norm; edits nothing |
 | Reader test (`reader`) | How a reader without context will read the text: a reader agent gets only the chapter text; where the book profile allows, an OpenAI model reads it in parallel; never starts on its own, edits nothing |
-| Setup (`setup`) | A wizard sets up the book profile and character cards step by step from the template; checks an existing card and edits nothing in it |
-| Continuity (`continuity`) | Checks a chapter against earlier ones and against the state documents the book keeps: who knows what, body and belongings, time, world rules — a table of mismatches for the author's verdict. After a chapter changes, updates the timeline, character state and knowledge state in the form the book already uses. Builds and extends world catalogues, each entry checked against its source and logged. Never edits chapter text |
+| Setup (`setup`) | A wizard sets up the book profile and character cards step by step from the template; checks the book profile and edits nothing in it |
+| Character cards (`characters`) | One character's card: create it from the author's words; generate it with the author — the model drafts a psychological portrait for the author to recognise and proposes the rest in sections marked «(ШІ)» next to the author's own; check a card against the template without editing; convert a card to the template |
+| Continuity (`continuity`) | Checks a chapter against earlier ones and against the state documents the book keeps: who knows what, body and belongings, time, world rules — a table of mismatches for the author's verdict. After a chapter changes, updates the timeline, character state and knowledge state in the form the book already uses. Builds and extends world catalogues, each entry checked against its source and logged. The character mode checks one card against every chapter the character appears in. Never edits chapter text |
 
 *Example:* "does this sound like AI?" on a three-sentence passage — a ready
 image, a paired abstraction, a filter word and a Russian calque, each with a
@@ -423,7 +425,8 @@ plugins/
     skills/ideas/                   scene and turn ideas, three modes
     skills/audit/                   audit and clean-up
     skills/reader/                  reader test
-    skills/setup/                   book setup wizard, character cards
+    skills/setup/                   book setup wizard, book profile check
+    skills/characters/              character cards: create, generate, check, convert
     skills/continuity/              continuity between chapters, state, catalogues
     shared/                         book profile, findings table, final pass, language, calques, orthography, sentence, dialogue, structure, character card, wizard, templates
     agents/                         reader agent for reader
