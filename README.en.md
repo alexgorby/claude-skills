@@ -286,7 +286,7 @@ goes on.
   action (push, email, a request to an adjacent team, publishing), when every
   way forward is a guess, and to approve its own entry in the plan's log.
   Everything else it decides itself and records.
-- **Cancelling.** «Без плану» *(no plan)*, «відміна планування» *(cancel
+- **Cancelling.** «Без плану» *(no plan)*, «відміна планування», «скасуй план» *(cancel the plan)*, «скасування планування» *(cancel
   planning)*, «план не треба» *(no plan needed)*, «пропускаємо план» *(skip
   the plan)* or "no" to a plan offer stop planning at any step. The skill
   records the step it stopped at, what is done, and the reason: your words or
@@ -307,9 +307,15 @@ goes on.
   app's task panel only mirrors the current steps.
 - **Review.** An independent review with `review` runs only when you ask
   («план готовий» *(the plan is ready)*), before the plan is approved.
-*Example:* moving a queue service from one VM to two to survive a node
-failure — criteria, reconnaissance, eight steps, and five questions with
-recommendations (is a "node" a host or a VM?).
+*Example (illustration in the new form, 20.11.2026, not a run):* moving a
+queue service from one VM to two to survive a node failure. The plan holds the
+task verbatim, two observable criteria (losing a node stops neither intake nor
+accepted messages), four stages (clarify what a "node" is, research where the
+queue keeps state and pick a scheme by the criteria, move, failure test) and
+"not doing" (no queue or client upgrade). The checklist has rows "who · № ·
+step · state · evidence" with the default states; step 1.1 waits on you (is a
+"node" a host or a VM?), and the failure test becomes "done" only with a
+protocol of what was switched off and what was observed.
 
 ### Review — `review`
 
