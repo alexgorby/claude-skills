@@ -92,7 +92,7 @@ the customer*) goes to the dispatcher, which names the skills and their order.
 | Check a finished specification | «Перевір ТЗ» *(check the spec)* | `language` |
 | Check claims against documentation | «Фактчекінг» *(fact-check)*, «перевір факти» *(check the facts)*, «звір із документацією» *(verify against the docs)* | `factcheck` |
 | Build a file for readers outside the team | «Збери docx» *(build a docx)*, «оформи як лист» *(format as an email)* | `export` |
-| Draft a work plan | «Спершу план» *(plan first)*, «склади план» *(make a plan)* | `plan` |
+| Draft a work plan and checklist | «Спершу план» *(plan first)*, «склади план» *(make a plan)*, «сплануй» *(plan it)*, or "yes" to a plan offer | `plan` |
 | Independent review of a plan or document | «План готовий» *(the plan is ready)*, «перевір незалежно» *(check independently)*, «рецензія HLD» *(HLD review)* | `review` |
 | Check that it reads without the author | «Тест читача» *(reader test)*, «чи зрозуміло це без мене» *(is it clear without me)* | `review` |
 
@@ -121,7 +121,7 @@ one session and is marked as not independent.
 | Postmortem | Closing an incident after service is restored |
 | Security document | How the system is protected: access, secrets, network surface, data, supply chain |
 | Diagram | Topology and mechanism, legible in print |
-| Plan | Only when asked: «спершу план» *(plan first)*, «склади план» *(make a plan)* |
+| Plan | Goal, work outline, criterion and boundaries; steps with states and evidence go in the checklist. When you ask («спершу план» *(plan first)*) or say "yes" to a plan offer |
 | Email, message, note, README | General rules: one document, one task; an email is a slice of the working document for one recipient |
 
 Each genre in detail and how to ask for it (in Ukrainian):
@@ -184,7 +184,8 @@ questions to an adjacent team.
 - **Self-check** — the genre checklist, a final language pass, a list of claims
   without a source, a marker summary and a stages line.
 
-Writing never offers a plan; planning starts only when you ask.
+Writing does not offer a plan: planning starts when you ask for one or say
+"yes" to a plan your environment offers.
 *Example:* an HLD fragment from a decision record — the contract table with
 an explicit depth exception, the fragment, two questions with options and a
 recommendation, and the stages line.
@@ -236,14 +237,76 @@ was not rebuilt because the text had not changed.
 
 ### Planning — `plan`
 
-Starts only when you ask ("plan first", "make a plan"); no skill offers it. A
-plan records the task verbatim and completion criteria that can be checked by
-observation. Before full work comes a short "plan for the plan": what to read,
-what to extract, what to check against, what the result looks like, what not
-to do; at this checkpoint you say "yes" or "skip". Steps take the form
-"step · output · state", and a step closes only with evidence. A change of
-the task is added as a delta, not a rewrite. When you say the plan is ready,
-review checks it.
+Writes a plan and a checklist for work on a document, a script, a
+configuration change or a skill, and keeps them up to date while the work
+goes on.
+
+- **How it starts.** When you ask («спершу план» *(plan first)*, «склади
+  план» *(make a plan)*, «сплануй» *(plan it)*) or say "yes" when the session
+  offers a plan. The skill itself does not offer or remind you of a plan: the
+  rules of your environment decide when to offer one.
+- **Plan and checklist.** The plan holds your task verbatim, the work in
+  outline by stages, the described result, the completion criterion, a
+  "not doing" boundary and a decision log. It changes rarely, and you approve
+  it. The checklist holds the work step by step: number, who does it, state,
+  evidence of closing, state history, decision log, surprises. It changes all
+  the time: the skill adds, moves and renames steps on its own, and deletes a
+  step only on your word.
+- **When a separate plan is needed.** When the task outlives a session, has
+  several stages, or has a fork that needs research. A stage is a part of the
+  work with its own result, which you see before the next stage starts.
+  Otherwise a checklist is enough: the task, the criterion and "not doing"
+  go in its header.
+- **Plan for the plan.** When reading the input is already expensive (a PDF,
+  a long transcript, several documents), the skill first only scouts the
+  input and writes five lines: what it reads and in what order, what it
+  extracts, what it checks against, what the result will look like, what it
+  will not do. Full work starts after your answer, and the fifth line moves
+  into the plan's "not doing". A small input needs no five lines.
+- **States and closing a step.** The default states are not started, in
+  progress, done. When a task needs its own decision states, their legend
+  goes in the plan and is approved with it. A step moves to a better state
+  only with evidence from the same session: a commit, a run, a check of
+  expected against actual.
+- **Decision logs.** When the goal, result, criterion or work outline
+  changes, the skill does not rewrite the plan: it adds a dated entry with the
+  reason to the plan's decision log and replans only the affected stages. A
+  change you named is approved by your words; a change the skill proposes
+  waits for your approval. Decisions the skill makes during the work go to the
+  checklist's decision log, and what does not fit into steps goes to
+  "surprises".
+- **Open questions.** During planning an open question becomes a stage
+  "research and choose by criteria <…>": the skill works it out itself when it
+  runs the stage. A step "contact the adjacent team" appears only when the
+  research showed that only that team can decide, and the question passed the
+  contact filter. The request carries at least two options, or says plainly
+  what was searched and why there is no second one.
+- **Stops.** While running an approved plan, the skill stops and asks you
+  only before an irreversible action, on security matters, before an outside
+  action (push, email, a request to an adjacent team, publishing), when every
+  way forward is a guess, and to approve its own entry in the plan's log.
+  Everything else it decides itself and records.
+- **Cancelling.** «Без плану» *(no plan)*, «відміна планування» *(cancel
+  planning)*, «план не треба» *(no plan needed)*, «пропускаємо план» *(skip
+  the plan)* or "no" to a plan offer stop planning at any step. The skill
+  records the step it stopped at, what is done, and the reason: your words or
+  a marked assumption. The work then goes on without a plan. "No" to the five
+  lines or to a log entry rejects only that item.
+- **Where the plan and checklist live.** By default the main copy is a
+  Markdown note at the project's standard path, in the task folder; a plan
+  from Claude Code plan mode is moved there as the first action. When there
+  is no place to save files (a session outside a project, an environment
+  without files), all task documents go to artifacts, and the skill tells you
+  so in one line. They also live only in artifacts when you or the project
+  profile decided so. For viewing, each plan has its own folder among artifacts: the
+  plan page, the pages of its checklists and the later documents of the task.
+  The skill generates the pages from the same data as the note and never edits
+  them by hand. When the tool cannot create folders, the skill publishes the
+  pages with the plan name in the title and asks you to move them into the
+  plan's folder. In chat the plan and checklist are kept as artifacts, and the
+  app's task panel only mirrors the current steps.
+- **Review.** An independent review with `review` runs only when you ask
+  («план готовий» *(the plan is ready)*), before the plan is approved.
 *Example:* moving a queue service from one VM to two to survive a node
 failure — criteria, reconnaissance, eight steps, and five questions with
 recommendations (is a "node" a host or a VM?).
