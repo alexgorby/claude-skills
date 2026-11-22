@@ -32,6 +32,11 @@
 
 Джерело: [creative-writing-skills, scene-construction.md](https://github.com/haowjy/creative-writing-skills/blob/0d5bf7f/cw/skills/creative-writing-craft/resources/scene-construction.md).
 
+**В аудиті Д1 знахідкою не є.** Побудова діалогу може триматися саме на
+такій репліці, тож аудит її не подає ні питанням, ні рядком «лишено». Д1 —
+орієнтир для письма, а не для перевірки чужого тексту (рішення автора
+2026-11-22).
+
 ## Д2. Підтекст
 
 Персонажі рідко кажуть те, що мають на думці. Вони ухиляються, применшують,
