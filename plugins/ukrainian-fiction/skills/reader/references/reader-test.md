@@ -111,8 +111,10 @@
      (`agents/fiction-reader.md`, тіло без полів на початку файла), — текстом у
      завданні, а не файлом: на Windows у пісочниці `read-only` інструмент
      команд не стартує, і файла Codex не прочитає. Виклик:
-     `codex exec -s read-only --skip-git-repo-check --ephemeral -C <порожня тека> -o <файл відповіді> -`,
-     завдання — через stdin.
+     `codex exec -s read-only --skip-git-repo-check --ephemeral --disable plugins --disable computer_use --disable browser_use -c mcp_servers.node_repl.enabled=false -C <порожня тека> -o <файл відповіді> -`,
+     завдання — через stdin. Прапорці `--disable` і
+     `-c mcp_servers.node_repl.enabled=false` вимикають у цьому виклику плагіни Codex,
+     керування комп'ютером і браузером: читачеві потрібен лише текст.
    - **Звірка.** Codex — читач, а не суддя: звірку робить
      виконавець, як і для першого читача (`findings.md`, А7, «Незалежне
      підтвердження для класу 2»). Хто загубився в місці — колонка «Хто:

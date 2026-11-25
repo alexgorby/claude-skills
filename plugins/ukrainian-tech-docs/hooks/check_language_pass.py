@@ -1,6 +1,13 @@
 """Stop hook: block the end of a turn that exported .docx/.xlsx/.pdf without a
 language pass after the last text change in that turn.
 
+Only a write into such a file counts as an export: the Write tool on that
+path, or a shell command whose output target is that file (-o, --output,
+SaveAs(...), .save(...), soffice --convert-to). A command that only mentions
+such a file, with its output going elsewhere, is not an export. When the
+target cannot be read from the command (a variable, a write inside a script),
+the hook reminds without blocking.
+
 The hook catches a missing pass. It cannot prove the pass was done well: the
 closing line of the skill stays mandatory.
 """
@@ -9,12 +16,44 @@ import re
 import sys
 
 EXPORT_RE = re.compile(r"\.(docx|xlsx|pdf)\b", re.IGNORECASE)
-# A shell command that only reads or lists such files is not an export.
+EXPORT_END_RE = re.compile(r"\.(docx|xlsx|pdf)$", re.IGNORECASE)
+ARG = r"""("[^"]*"|'[^']*'|[^\s;|&)]+)"""
+TARGET_RES = [
+    re.compile(r"(?:^|\s)-o\s+" + ARG),
+    re.compile(r"--output(?:=|\s+)" + ARG),
+    re.compile(r"\.SaveAs2?\(\s*" + ARG.replace("[^\\s;|&)]+", "[^,)]+")),
+    re.compile(r"\.save\(\s*" + ARG.replace("[^\\s;|&)]+", "[^,)]+")),
+]
+CONVERT_RE = re.compile(r"--convert-to\s+[\"']?(docx|xlsx|pdf)\b", re.IGNORECASE)
+# A command with a build tool and a document name, but no readable target.
 BUILD_RE = re.compile(
-    r"pandoc|soffice|libreoffice|wkhtmltopdf|docx2pdf|\s-o\s|--output|\.save\(|"
-    r"SaveAs|Export-|ConvertTo|Packer|build",
+    r"pandoc|soffice|libreoffice|wkhtmltopdf|docx2pdf|Export-|ConvertTo|Packer|build",
     re.IGNORECASE,
 )
+
+
+def shell_export(command):
+    """'export', 'maybe' or None for one shell command."""
+    if not EXPORT_RE.search(command):
+        return None
+    if CONVERT_RE.search(command):
+        return "export"
+    targets = [m.group(1) for rx in TARGET_RES for m in rx.finditer(command)]
+    unclear = False
+    for t in targets:
+        literal = t[:1] in "\"'" and t[-1:] == t[:1]
+        value = t[1:-1] if literal else t
+        if EXPORT_END_RE.search(value.strip()) and "$" not in value and "%" not in value:
+            return "export"
+        if not literal and not re.fullmatch(r"[\w.:\\/\-]+", value):
+            unclear = True  # a variable or an expression
+        elif literal and ("$" in value or "{" in value):
+            unclear = True  # an interpolated string
+    if unclear:
+        return "maybe"
+    if targets:
+        return None  # output goes to another file; the document is only mentioned
+    return "maybe" if BUILD_RE.search(command) else None
 TEXT_RE = re.compile(r"\.(md|txt|html?)$", re.IGNORECASE)
 WRITE_TOOLS = {"Write", "Edit", "MultiEdit", "NotebookEdit"}
 SHELL_TOOLS = {"Bash", "PowerShell"}
@@ -73,7 +112,7 @@ def main():
         if is_human_turn(e):
             start = i
 
-    export_at = text_at = lang_at = None
+    export_at = maybe_at = text_at = lang_at = None
     step = 0
     for e in entries[start:]:
         for use in tool_uses(e):
@@ -84,8 +123,12 @@ def main():
             command = str(inp.get("command") or "")
             if name in WRITE_TOOLS and EXPORT_RE.search(target):
                 export_at = step
-            elif name in SHELL_TOOLS and EXPORT_RE.search(command) and BUILD_RE.search(command):
-                export_at = step
+            elif name in SHELL_TOOLS and command:
+                kind = shell_export(command)
+                if kind == "export":
+                    export_at = step
+                elif kind == "maybe":
+                    maybe_at = step
             elif name in WRITE_TOOLS and TEXT_RE.search(target):
                 text_at = step
             if name in ("Read", "Grep") and "language.md" in target.replace("\\", "/"):
@@ -93,9 +136,16 @@ def main():
             if name == "Skill" and "language" in str(inp.get("skill", "")):
                 lang_at = step
 
-    if export_at is None:
-        return 0
     if lang_at is not None and (text_at is None or lang_at > text_at):
+        return 0
+    if export_at is None:
+        if maybe_at is not None:
+            print(json.dumps({"systemMessage": (
+                "Нагадування хука мовного проходу: у цьому ході, можливо, зібрано "
+                ".docx, .xlsx чи .pdf (з команди не видно, у який файл іде запис), а мовного "
+                "проходу після останньої зміни тексту не було. Якщо документ іде "
+                "читачеві — пройди його за shared/language.md, «Фінальний прохід».")},
+                ensure_ascii=False))
         return 0
     print(json.dumps({
         "decision": "block",
