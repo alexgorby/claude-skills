@@ -9,7 +9,7 @@
     {
       "name": "ukrainian-tech-docs",
       "source": "./plugins/ukrainian-tech-docs",
-      "description": "Ukrainian technical documentation: a dispatcher and six skills (writing, language check, fact-checking, export, planning, multi-agent review); source discipline, living language without AI clichés, genre rules (HLD, LLD, ADR, runbook, postmortem…)"
+      "description": "Ukrainian technical documentation: a dispatcher and seven skills (writing, language check, fact-checking, export, planning, multi-agent review, PowerShell script maps); source discipline, living language without AI clichés, genre rules (HLD, LLD, ADR, runbook, postmortem…)"
     },
     {
       "name": "ukrainian-fiction",
