@@ -189,6 +189,7 @@ description: >-
 | Чек-лист послідовності | `genres/sequence-checklist.md` | огляд кроків від події, що відкриває роботу, до передачі результату для керівника; стан виконання кожного кроку |
 | Troubleshooting | `genres/troubleshooting.md` | запис випадку: симптом першим |
 | Постмортем | `genres/postmortem.md` | закриття інциденту після відновлення сервісу |
+| Звіт перевірки скриптів | `genres/script-review.md` | статичний розбір коду на ризики: ревізія, що не виконувалось, знахідки з доказом до рядка, план |
 | Схема | `genres/schema.md` | топологія і механізм; читаність у друці; огляд — розд. 7 |
 | План | `genres/plan.md` | скіл `plan`; вмикання — `genres/plan.md`, вступ |
 | Усе інше | `genres/general.md` | правила для всіх жанрів; лист, нотатка, README, коментар й опис задачі в трекері |
@@ -268,7 +269,8 @@ templates/
   evidence.md               джерела, маркери, коди, перелік перед записом
   language.md               мова, терміни, аудит, фінальний прохід
   genres/                   hld · lld · adr · tz · howto · stepbystep · concept · reference ·
-                            sequence-checklist · troubleshooting · postmortem · schema ·
+                            sequence-checklist · troubleshooting · postmortem ·
+                            script-review · schema ·
                             plan · general
   templates/project-profile.md   шаблон профілю проєкту
 ```
