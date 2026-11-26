@@ -1,0 +1,14 @@
+[
+ {
+  "id": "K1",
+  "group": "K",
+  "task": "Перевірте факти у фрагменті нотатки колеги за джерелами проєкту та матеріалами нижче. Поверніть звіт.",
+  "input": "ФРАГМЕНТ НОТАТКИ:\nСкрипт deploy-node.ps1 налаштовує вузол Ліхтаря за 12 хвилин і наприкінці вмикає повторну доставку. Це підтверджено журналом прогону.\n\nЖУРНАЛ ПРОГОНУ (вкладено колегою):\n[2026-10-02 10:00:03] deploy-node.ps1 v1.3 start; host=lab-node-07.example.internal; ip=10.20.30.47; tenant=contoso-lab\n[2026-10-02 10:07:41] Configure storage: OK\n[2026-10-02 10:11:58] Enable retry: OK\n[2026-10-02 10:12:05] Done in 12m 02s\n\nПОТОЧНИЙ КОД СКРИПТА (deploy-node.ps1, v1.4, коміт 9f2c1a0, 2026-11-20), уривок кінця:\n# Configure storage\nInvoke-LihtarStorageSetup -Node $Node\n# Retry is no longer enabled here: the operator enables it manually after the acceptance test (change 2026-11-18)\nWrite-Log \"Done\""
+ },
+ {
+  "id": "K2",
+  "group": "K",
+  "task": "Перевір, чи правильні команди в цій інструкції для Ліхтаря, і скажи, що виправити. Поверни звіт.",
+  "input": "ІНСТРУКЦІЯ «Перезапуск служби Ліхтаря на кластері»:\n1. Подивитися стан вузлів: `lihtar-ctl status --all`.\n2. Вивести вузол node2 з обслуговування: `lihtar-ctl node drain node2`.\n3. Перезапустити службу на всіх вузлах: `lihtar-ctl service restart --all`.\n4. Переконатися, що всі вузли в стані Ready: `lihtar-ctl status --all`."
+ }
+]
