@@ -98,7 +98,7 @@ description: >-
 
 ## 3. Закривальний рядок
 
-`Стадії: вхід (audit/SKILL, profile, профіль книги, канон голосу, словник) · аудит (audit А1–А2, findings А3, scene-chapter, dialogue, sentence, language, orthography) · текст не змінювався`
+`Стадії: вхід (audit/SKILL, profile, профіль книги, канон голосу, словник) · аудит (audit А1–А2, findings А3, scene-chapter, dialogue, sentence, language, orthography) · відсів (окремий субагент / той самий виконавець — чому; таблиця порожня — поля немає) · текст не змінювався`
 
 Для повторів між главами — свій рядок:
 `Стадії: вхід (audit/SKILL, profile, профіль книги, <прочитані слоти>) · повтори між главами (audit А8; режим: том / глава з попередньою; глави <…>; кандидати: scripts/repeats.py / без скрипта; scene-chapter С19, findings А3, А7) · текст не змінювався`
